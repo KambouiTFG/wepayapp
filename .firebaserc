@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "kamboui-tfg"
+  },
+  "targets": {
+    "kambowepay": {
+      "hosting": {
+        "app": [
+          "kambowepay"
+        ]
+      }
+    }
+  }
+}

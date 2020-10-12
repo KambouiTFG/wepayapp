@@ -1,0 +1,19 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+
+        <ion-thumbnail slot="start">
+            <ion-img src="/assets/img/logo_only_wePay.svg" class="mx-2"></ion-img>
+        </ion-thumbnail>
+
+        <ion-title class="ion-text-center">
+            {{titulo}}
+        </ion-title>
+
+        <ion-buttons slot="end">
+            <ion-button (click)="logout()" color="danger">
+                <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>

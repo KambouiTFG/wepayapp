@@ -1,0 +1,17 @@
+<ion-tabs>
+
+    <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="home">
+            <ion-icon name="home-outline"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="room" *ngIf="haySala">
+            <ion-icon name="browsers-outline"></ion-icon>
+        </ion-tab-button>
+
+        <ion-tab-button tab="me">
+            <ion-icon name="person-outline"></ion-icon>
+        </ion-tab-button>
+    </ion-tab-bar>
+
+</ion-tabs>
