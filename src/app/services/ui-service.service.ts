@@ -1,7 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { AlertController, LoadingController, ToastController } from '@ionic/angular';
-import { Sala } from '../interfaces/interfaces';
-import { UsuarioService } from './usuario.service';
+import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { Producto, Sala } from '../interfaces/interfaces';
+import { ModalProductoComponent } from '../components/modal-producto/modal-producto.component';
+import { ModalCrearProductoComponent } from '../components/modal-crear-producto/modal-crear-producto.component';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,11 @@ export class UiServiceService {
 
   constructor(private toastCtrl: ToastController,
               private loadingCtrl: LoadingController,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private modalCtrl: ModalController) {
 
                }
+
 
   async alertaInformativa(message) {
     const toast = await this.toastCtrl.create({
@@ -69,5 +72,44 @@ export class UiServiceService {
     });
     await alert.present();
   }
+
+   async presentModalProducto(producto: Producto, idSala: string, role: number) {
+    const modal = await this.modalCtrl.create({
+      component: ModalProductoComponent,
+      componentProps: {
+        infoProducto: producto,
+        idSala,
+        role
+      }
+    });
+    await modal.present();
+
+    const {data} = await modal.onDidDismiss();
+    // console.log(data);
+    if (data) {
+      return data;
+    } else {
+      return null;
+    }
+  }
+
+  async presentModalCrearProducto(idSala: string) {
+    const modal = await this.modalCtrl.create({
+      component: ModalCrearProductoComponent,
+      componentProps: {
+        idSala
+      }
+    });
+    await modal.present();
+
+    const {data} = await modal.onDidDismiss();
+    if (data) {
+      return data.producto;
+    } else {
+      return null;
+    }
+  }
+
+  
 
 }

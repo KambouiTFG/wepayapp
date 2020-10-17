@@ -1,0 +1,15 @@
+<ion-item *ngIf="infoUser">
+    <ion-avatar slot="start">
+        <img src="/assets/avatars/{{infoUser.avatar}}" />
+    </ion-avatar>
+    <p>
+        {{infoUser.nombre}}
+
+    </p>
+    <ion-buttons slot="end" *ngIf="role !== 0">
+        <h5 class="text-primary">
+            <i class="fas fa-crown mr-3" *ngIf="role === 2"></i>
+            <i class="fas fa-user-shield mr-3" *ngIf="role === 1"></i>
+        </h5>
+    </ion-buttons>
+</ion-item>

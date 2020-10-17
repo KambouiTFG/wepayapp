@@ -1,8 +1,12 @@
 <ion-header class="ion-no-border">
     <ion-toolbar>
 
-        <ion-thumbnail slot="start">
+        <ion-thumbnail slot="start" *ngIf="!img">
             <ion-img src="/assets/img/logo_only_wePay.svg" class="mx-2"></ion-img>
+        </ion-thumbnail>
+
+        <ion-thumbnail slot="start" *ngIf="img">
+            <ion-img src="/assets/avatars/{{img}}" class="mx-2"></ion-img>
         </ion-thumbnail>
 
         <ion-title class="ion-text-center">
@@ -10,8 +14,11 @@
         </ion-title>
 
         <ion-buttons slot="end">
-            <ion-button (click)="logout()" color="danger">
+            <ion-button (click)="logout()" color="danger" *ngIf="!sala">
                 <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="salirSala()" color="danger" *ngIf="sala">
+                <ion-icon slot="icon-only" name="close-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
 

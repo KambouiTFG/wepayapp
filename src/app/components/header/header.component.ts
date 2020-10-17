@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { SalaService } from '../../services/sala.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -9,13 +10,19 @@ import { AuthService } from '../../services/auth.service';
 export class HeaderComponent implements OnInit {
 
   @Input() titulo: string;
-
-  constructor(private _auth: AuthService) { }
+  @Input() img?: string;
+  @Input() sala = false;
+  constructor(private _auth: AuthService,
+              private _sala: SalaService) { }
 
   ngOnInit() {}
 
   logout() {
     this._auth.logout();
+  }
+
+  salirSala() {
+    this._sala.salirSala();
   }
 
 }

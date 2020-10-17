@@ -15,7 +15,16 @@ export interface Sala {
     open?: boolean;
     owner?: string;
     admins?: string[];
-    productos?: string[];
     participantes?: string[];
     uid?: string;
+}
+
+export interface Producto {
+    nombre?: string;
+    descripcion?: string;
+    precio?: number;
+    categoria?: string;
+    unidad?: number;
+    participantes?: string[];
+    propertyId?: string;
 }

@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { pipe } from 'rxjs';
 import { User } from '../interfaces/interfaces';
 import { UiServiceService } from './ui-service.service';
 
@@ -12,6 +13,7 @@ export class UsuarioService {
   hayUser = new EventEmitter();
   
 
+  
 
   constructor(private db: AngularFirestore,
               private uiCtrl: UiServiceService) { }
@@ -79,6 +81,37 @@ export class UsuarioService {
       console.log('Sala añadida al usuario');
     });
   }
+
+  async getInfoUser(idUser: string) {
+    return await this.db.collection('users').doc(idUser).get().toPromise()
+    .then(r => {
+      return {
+        nombre: r.data().nombre,
+        avatar: r.data().avatar,
+      };
+    });
+  }
+
+  async getInfoSalasUser(idUser: string) {
+    return await this.db.collection('users').doc(idUser).get().toPromise()
+    .then(r => {
+      return r.data().salas;
+    });
+  }
+
+      // this._user.deleteUserSala(this.idSala, idUser);
+
+  async deleteUserSala(idSala: string, idUser: string) {
+    const salas: string[] = await this.getInfoSalasUser(idUser);
+    salas.splice(salas.indexOf(idSala), 1);
+
+    await this.db.collection('users').doc(idUser).update({
+      salas
+    }).then(() => {
+      console.log('Sala borrada del usuario');
+    });
+  }
+
 
 
 

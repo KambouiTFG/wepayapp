@@ -1,0 +1,149 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="salir()" color="primary">
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>Información del Producto</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+    <div class="form-producto">
+        <form (ngSubmit)="crearProducto( f )" #f="ngForm">
+
+            <div class="ion-text-center nombre-producto">
+                <ion-item class="prueba p-1">
+                    <ion-label position="floating">Nombre<span class="text-danger" *ngIf="edit">*</span></ion-label>
+                    <ion-input [(ngModel)]="producto.nombre" name="nombreProducto" [readonly]="!edit"></ion-input>
+                </ion-item>
+                <span *ngIf="f.submitted && f.controls['nombreProducto'].errors" class="text-danger animated fadeIn">Campo obligatorio</span>
+            </div>
+
+            <div class="desc-producto">
+                <ion-item class="prueba p-2">
+                    <ion-label position="floating">Descripción <small *ngIf="edit">(opcional)</small></ion-label>
+                    <ion-textarea rows="3" cols="20" placeholder="Introduzca una breve descripción" name="descripcionProducto" [(ngModel)]="producto.descripcion" [readonly]="!edit"></ion-textarea>
+                </ion-item>
+            </div>
+
+            <div class="ion-text-center categoria-producto">
+                <ion-item class="prueba p-2">
+                    <ion-label>Categoria<span class="text-danger">*</span></ion-label>
+                    <ion-select name="categoriaProducto" class="form-control" [(ngModel)]="producto.categoria" required [disabled]="!edit">
+                        <ion-select-option value="0">Comida</ion-select-option>
+                        <ion-select-option value="1">Bebida</ion-select-option>
+                        <ion-select-option value="2">Utensilio</ion-select-option>
+                        <ion-select-option value="3">Transporte</ion-select-option>
+                        <ion-select-option value="4">Otro</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <span *ngIf="f.submitted && f.controls['categoriaProducto'].errors" class="text-danger animated fadeIn">Campo obligatorio</span>
+            </div>
+
+            <div class="num-producto">
+                <ion-item class="prueba p-2">
+                    <div class="form-group m-2">
+                        <label for="unidadProducto">Unidades <span class="text-danger"  *ngIf="edit">*</span></label>
+                        <div class="input-group">
+                            <input type="number" step="1" class="form-control" id="unidadProducto" name="unidadProducto" [(ngModel)]="producto.unidad" [readonly]="!edit" required>
+                        </div>
+                        <span *ngIf="f.submitted && f.controls['unidadProducto'].errors" class="text-danger animated fadeIn">Campo obligatorio, mayor que 0</span>
+                    </div>
+                    <div class="form-group m-2">
+                        <label for="precioProducto">Precio unidad <span class="text-danger"  *ngIf="edit">*</span></label>
+                        <div class="input-group">
+                            <input type="number" step="0.01" class="form-control" id="precioProducto" name="precioProducto" [(ngModel)]="producto.precio" [readonly]="!edit" required>
+                            <div class="input-group-append">
+                                <span class="input-group-text">€</span>
+                            </div>
+                        </div>
+                        <span *ngIf="f.submitted && f.controls['precioProducto'].errors" class="text-danger animated fadeIn">Campo obligatorio, mayor que 0</span>
+                    </div>
+                </ion-item>
+            </div>
+
+
+            <!-- crear el list de usuarios que participan en el app-lista-productosy a su vez editarlo -->
+            <div class="participantes-producto">
+                <ion-list-header>
+                    <ion-label>Participantes</ion-label>
+                </ion-list-header>
+                <ion-list>
+                    <ion-item *ngFor="let user of producto.participantes">
+                        <app-participantes [idUser]="user" [role]="0"></app-participantes>
+                        <ion-button slot="end" shape="round" *ngIf="edit" color="danger" (click)="quitarPart(user)">
+                            <ion-icon name="remove-outline"></ion-icon>
+                        </ion-button>
+                    </ion-item>
+                    <ion-item *ngIf="producto.participantes.length === 0">
+                        <ion-label>¡Este producto no tiene participantes!</ion-label>
+                    </ion-item>
+                </ion-list>
+            </div>
+
+            <div class="no-participantes-producto" *ngIf="edit">
+                <ion-list-header>
+                    <ion-label>No participantes</ion-label>
+                </ion-list-header>
+                <ion-list>
+                    <ion-item *ngFor="let user of producto.participantes | noParticipantesProducto">
+                        <app-participantes [idUser]="user" [role]="0"></app-participantes>
+                        <ion-button slot="end" shape="round" *ngIf="edit" color="primary" (click)="addPart(user)">
+                            <ion-icon name="add-outline"></ion-icon>
+                        </ion-button>
+                    </ion-item>
+                    <ion-item *ngIf="(producto.participantes | noParticipantesProducto).length === 0">
+                        <ion-label>No hay más participantes en la sala</ion-label>
+                    </ion-item>
+                </ion-list>
+            </div>
+
+
+
+            <div class="divButtons">
+                <!-- <ion-button type="button" shape="round" color="danger" (click)="salir()" *ngIf="edit">
+                    Cancelar
+                </ion-button>
+                <ion-button type="submit" shape="round" *ngIf="edit">
+                    Guardar
+                </ion-button> -->
+                <ion-button type="button" shape="round" color="warning" (click)="editar()" *ngIf="!edit && role !== 0">
+                    Editar
+                </ion-button>
+            </div>
+
+            <!-- <div class="divButtonBorrar" *ngIf="edit">
+                <button type="button" class="btn btn-outline-danger" (click)="borrarProducto()">
+                    Borrar Producto
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+
+            </div> -->
+
+        </form>
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="start" slot="fixed" *ngIf="edit">
+        <ion-fab-button color="dark">
+            <ion-icon name="construct-outline"></ion-icon>
+        </ion-fab-button>
+
+        <ion-fab-list side="top">
+            <ion-fab-button color="light" (click)="salir()">
+                <ion-icon name="arrow-undo"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="primary" (click)="crearProducto( f )">
+                <ion-icon name="save-outline"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
+
+        <ion-fab-list side="end">
+            <ion-fab-button color="danger" (click)="borrarProducto()">
+                <ion-icon name="trash-outline"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
+
+    </ion-fab>
+</ion-content>

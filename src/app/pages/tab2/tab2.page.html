@@ -1,13 +1,55 @@
-<ion-header [translucent]="true">
-    <ion-toolbar>
-        <ion-title>
-            Tab 2
-        </ion-title>
-    </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-    <ion-button (click)="salirSala() " shape="round " color="danger ">
+<app-header [titulo]="infoSala.nombre" img="av-1.png" sala=true></app-header>
+<div class="btn-group btn-group-toggle ff" data-toggle="buttons">
+    <button type="button" class="btn btn-outline-primary btn-sm f" [ngClass]="{'active': sIndex === 0}" (click)="irSlide(0)">
+        Participantes
+        <i class="fas fa-users"></i>
+    </button>
+    <button type="button" class="btn btn-outline-primary btn-sm f" [ngClass]="{'active': sIndex === 1}" (click)="irSlide(1)">
+        Productos
+        <i class="fas fa-calculator ml-1"></i>
+    </button>
+    <button type="button" class="btn btn-outline-primary btn-sm f" [ngClass]="{'active': sIndex === 2}" (click)="irSlide(2)">
+        Chat
+        <i class="far fa-comments"></i>
+    </button>
+</div>
+<ion-content color="light">
+    <!-- <ion-button (click)="salirSala() " shape="round " color="danger ">
         Salir de Sala
-    </ion-button>
+    </ion-button> -->
+
+
+    <ion-slides class="mainSlide" #mainSlide [options]="slideOpts">
+        <ion-slide class="ion-padding">
+            <div class="cuadrado">
+                <div class="lista-participantes">
+                    <ion-list>
+                        <app-participantes *ngFor="let user of infoSala.participantes" [idUser]="user" [role]="role(user)"></app-participantes>
+                    </ion-list>
+                </div>
+
+                <ion-button shape="round" color="danger" *ngIf="!(role(myUid) === 2)" (click)="presentAlertConfirmAbandonarSala()">
+                    Abandonar sala
+                </ion-button>
+                <ion-button shape="round" color="warning" *ngIf="role(myUid) !== 0">
+                    Ajustes de sala
+                </ion-button>
+
+            </div>
+        </ion-slide>
+
+        <ion-slide class="ion-padding">
+            <div class="cuadrado">
+                <app-lista-productos [role]="role(myUid)" [idUser]="myUid"></app-lista-productos>
+            </div>
+
+        </ion-slide>
+
+        <ion-slide class="ion-padding">
+            <div class="cuadrado"></div>
+
+        </ion-slide>
+    </ion-slides>
+
+
 </ion-content>

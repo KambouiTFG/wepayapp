@@ -1,0 +1,43 @@
+<div class="mb-1 text-center">
+    <strong>Mi participación: </strong><span class="badge badge-pill badge-primary">{{miPart |  number : '1.2-2'}} €</span>
+</div>
+
+<ion-list-header color="primary">
+    <ion-label>Producto</ion-label>
+    <ion-label>Unidades</ion-label>
+    <ion-label>Precio</ion-label>
+    <ion-label> {{productos.length}}
+        <i class="fas fa-shopping-basket"></i>
+    </ion-label>
+</ion-list-header>
+<div class="lista-productos">
+    <table class="table table-hover ">
+        <tbody class="body-table">
+            <tr>
+                <ion-label *ngIf="productos.length === 0">No hay productos</ion-label>
+            </tr>
+            <tr *ngFor="let product of productos" class="puntero" data-toggle="modal" data-target="#infoProducto" (click)="verDetalles(product)">
+                <td><small>{{product.nombre}}</small></td>
+                <td><small>{{product.unidad}} unds</small></td>
+                <td><span class="badge badge-pill badge-primary">{{product.precio |  number : '1.2-2'}} €</span></td>
+                <td><span class="badge badge-pill badge-info" [ngClass]="{'badge-danger': product.participantes.length === 0}">{{product.participantes.length}} <i class="fas fa-users"></i></span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="footer-list">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="6" class="ion-text-left">
+                <button type="button" class="btn btn-primary badge-pill" *ngIf="role !== 0" (click)="CrearProducto()">
+                    Añadir
+                    <i class="fas fa-cart-plus"></i>
+                </button>
+            </ion-col>
+            <ion-col size="6" class="ion-text-right">
+                <strong>Total</strong>
+                <span class="badge badge-pill badge-primary ml-1">{{total |  number : '1.2-2'}} €</span>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>

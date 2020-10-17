@@ -12,7 +12,7 @@ import { User } from '../../interfaces/interfaces';
 })
 export class Tab1Page implements OnInit{
   nombreSala = '';
-  codigoSala = '4oau9do';
+  codigoSala = 'uubz468';
   myInfo: User = {};
   haySalas = false;
 
@@ -38,7 +38,7 @@ export class Tab1Page implements OnInit{
     // this._sala.seleccionarSala();
   }
 
-  async crearSala(form: NgForm) {
+  async crearSala() {
     if (this.nombreSala.length < 4 ) {
       this.uiCtrl.presentAlert('El nombre de la sala debe tener entre 4 y 16 caracteres');
       return;
@@ -46,20 +46,20 @@ export class Tab1Page implements OnInit{
     const loading = await this.uiCtrl.presentLoading('Creando Sala');
     await this._sala.grabarSala(this.nombreSala);
     await this.uiCtrl.dismisLoading(loading);
-    form.resetForm();
+    this.nombreSala = '';
   }
 
   async buscarSala() {
     if (this.codigoSala.length !== 7 ) {
-      this.uiCtrl.presentAlert('El tamaño del código es de 7 caracteres');
+      await this.uiCtrl.presentAlert('El tamaño del código es de 7 caracteres');
       return;
     }
-    this._sala.buscarSala(this.codigoSala);
+    await this._sala.buscarSala(this.codigoSala);
     this.codigoSala = '';
   }
 
   irSala(idSala: string) {
-    console.log('Sala seleccionada: ', idSala);
+    // console.log('Sala seleccionada: ', idSala);
     this._sala.seleccionarSala(idSala);
   }
 }
