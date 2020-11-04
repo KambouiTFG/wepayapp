@@ -109,7 +109,4 @@ export class UiServiceService {
       return null;
     }
   }
-
-  
-
 }

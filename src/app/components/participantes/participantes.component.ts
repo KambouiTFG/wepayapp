@@ -15,11 +15,18 @@ export class ParticipantesComponent implements OnInit {
   constructor(private _user: UsuarioService,
               private _sala: SalaService) { }
 
-  async ngOnInit() {
-    this._sala.haySala.subscribe(async () => {
-      this.infoUser = await this._user.getInfoUser(this.idUser);
+  ngOnInit() {
+    /* this._sala.haySala.subscribe(() => {
+      this.haySala = true;
+    }); */
+
+    this._user.hayCambio.subscribe((r) => {
+      if (r) {
+        console.log('CAMBIO en participantes');
+        this.infoUser = this._user.getNombre(this.idUser);
+      }
     });
     // console.log('PARTICIPANTES CPM', this.idUser);
-    this.infoUser = await this._user.getInfoUser(this.idUser);
+    this.infoUser = this._user.getNombre(this.idUser);
   }
 }

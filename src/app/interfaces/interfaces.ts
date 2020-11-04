@@ -5,6 +5,7 @@ export interface User {
     cambioNombre?: number;
     avatar?: string;
     salas?: string[];
+    propertyId?: string;
 }
 
 export interface Sala {
@@ -17,6 +18,8 @@ export interface Sala {
     admins?: string[];
     participantes?: string[];
     uid?: string;
+    propertyId?: string;
+
 }
 
 export interface Producto {
@@ -27,4 +30,10 @@ export interface Producto {
     unidad?: number;
     participantes?: string[];
     propertyId?: string;
+}
+
+export interface Mensaje {
+    idUser?: string;
+    msg?: string;
+    date?: number;
 }

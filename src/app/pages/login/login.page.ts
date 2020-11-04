@@ -14,7 +14,7 @@ export class LoginPage implements OnInit {
 
   @ViewChild( 'mainSlide') slides: IonSlides;
 
-  loginUser = {
+  /* loginUser = {
     email: 'mohitaa@gmail.com',
     password: '123456'
   };
@@ -23,6 +23,18 @@ export class LoginPage implements OnInit {
     email: 'mohitaa@gmail.com',
     password: '123456',
     nombre: 'mohitaa',
+    avatar: 'av-1.png'
+  }; */
+
+  loginUser = {
+    email: '',
+    password: ''
+  };
+  
+  registroUser = {
+    email: '',
+    password: '',
+    nombre: '',
     avatar: 'av-1.png'
   };
 
@@ -38,6 +50,7 @@ export class LoginPage implements OnInit {
 
 
   async login(login: NgForm) {
+    console.log('Clickeado boton del login');
     if ( login.invalid ) { return; }
     await this._auth.login(this.loginUser.email, this.loginUser.password);
   }

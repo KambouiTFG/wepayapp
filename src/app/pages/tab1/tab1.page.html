@@ -1,77 +1,87 @@
 <app-header titulo="Menú Principal"></app-header>
 <ion-content class="ion-padding" color="light">
 
-    <div class="divMain mb-2">
-        <ion-grid fixed>
-            <ion-row>
-                <ion-list-header class="ion-text-center">
-                    <ion-title>Crear Sala</ion-title>
-                </ion-list-header>
-            </ion-row>
-            <!-- <form (ngSubmit)="crearSala( f )" #f="ngForm"> -->
-            <ion-row>
+    <div class="cuadrado">
+        <!--     <div class="divMain">
+ -->
+        <div class="max">
 
-                <ion-col size="9">
-                    <ion-item class="prueba p-1">
-                        <ion-label position="floating">Nombre de la sala</ion-label>
-                        <ion-input class="ion-no-border" type="text" name="creandoSala" [(ngModel)]="nombreSala"></ion-input>
-                    </ion-item>
+            <ion-grid fixed>
+                <ion-row>
+                    <ion-list-header class="ion-text-center">
+                        <ion-title>Crear Sala</ion-title>
+                    </ion-list-header>
+                </ion-row>
+                <!-- <form (ngSubmit)="crearSala( f )" #f="ngForm"> -->
+                <ion-row>
 
-                </ion-col>
+                    <ion-col size="9">
+                        <ion-item class="prueba p-1">
+                            <ion-label position="floating">Nombre de la sala</ion-label>
+                            <ion-input class="ion-no-border" type="text" name="creandoSala" [(ngModel)]="nombreSala"></ion-input>
+                        </ion-item>
 
-                <ion-col size="3" class="ion-align-self-center">
-                    <ion-button shape="round" (click)="crearSala()">
-                        <ion-icon slot="icon-only" name="add"></ion-icon>
-                    </ion-button>
-                </ion-col>
-            </ion-row>
-            <!-- </form> -->
-        </ion-grid>
-    </div>
+                    </ion-col>
 
-    <div class="divMain mb-2">
-        <ion-grid fixed>
-            <ion-row>
-                <ion-list-header class="ion-text-center">
-                    <ion-title>Buscar Sala</ion-title>
-                </ion-list-header>
-            </ion-row>
-            <ion-row>
-                <ion-col size="9">
-                    <ion-item class="prueba">
-                        <ion-label position="floating">Código de la sala</ion-label>
-                        <ion-input type="text" name="buscarSala" [(ngModel)]="codigoSala"></ion-input>
-                    </ion-item>
-                </ion-col>
+                    <ion-col size="3" class="ion-align-self-center">
+                        <ion-button shape="round" (click)="crearSala()">
+                            <ion-icon slot="icon-only" name="add"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+                <!-- </form> -->
+            </ion-grid>
+            <!--     </div>
+ -->
+            <!--     <div class="divMain mt-2 mb-2">
+ -->
+            <ion-grid fixed>
+                <ion-row>
+                    <ion-list-header class="ion-text-center">
+                        <ion-title>Buscar Sala</ion-title>
+                    </ion-list-header>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="9">
+                        <ion-item class="prueba">
+                            <ion-label position="floating">Código de la sala</ion-label>
+                            <ion-input type="text" name="buscarSala" [(ngModel)]="codigoSala"></ion-input>
+                        </ion-item>
+                    </ion-col>
 
-                <ion-col size="3" class="ion-align-self-center">
-                    <ion-button shape="round" (click)="buscarSala()">
-                        <ion-icon slot="icon-only" name="search"></ion-icon>
-                    </ion-button>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </div>
+                    <ion-col size="3" class="ion-align-self-center">
+                        <ion-button shape="round" (click)="buscarSala()">
+                            <ion-icon slot="icon-only" name="search"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <!--     </div>
+ -->
+            <div class="divList" *ngIf="myInfo">
 
-    <div class="divList mb-2" *ngIf="myInfo">
-        <ion-grid fixed>
-            <ion-row>
-                <ion-list-header class="ion-text-center">
-                    <ion-title>Mis salas</ion-title>
-                </ion-list-header>
-            </ion-row>
-        </ion-grid>
-        <div class="listaSalas ion-padding">
-            <ion-list>
-                <app-item-sala *ngFor="let sala of myInfo.salas" [idSala]="sala" (click)="irSala( sala )"></app-item-sala>
-                <ion-item *ngIf="haySalas">
-                    <ion-label class="ion-text-center">No perteneces a ninguna sala
-                        <p>
-                            ¡Crea o únete a una sala!
-                        </p>
-                    </ion-label>
-                </ion-item>
-            </ion-list>
+                <ion-grid fixed>
+                    <ion-row>
+                        <ion-list-header class="ion-text-center">
+                            <ion-title>Mis salas
+                                <span class="badge badge-primary badge-pill" *ngIf="haySalas">{{myInfo.salas.length}}</span>
+                            </ion-title>
+                        </ion-list-header>
+                    </ion-row>
+                </ion-grid>
+                <div class="listaSalas">
+                    <ion-list>
+                        <app-item-sala *ngFor="let sala of myInfo.salas" [idSala]="sala" (click)="irSala( sala )"></app-item-sala>
+                        <ion-item *ngIf="!haySalas">
+                            <ion-label class="ion-text-center">No perteneces a ninguna sala
+                                <p>
+                                    ¡Crea o únete a una sala!
+                                </p>
+                            </ion-label>
+                        </ion-item>
+                    </ion-list>
+                </div>
+            </div>
         </div>
 
     </div>

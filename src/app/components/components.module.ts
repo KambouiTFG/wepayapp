@@ -10,6 +10,8 @@ import { ModalProductoComponent } from './modal-producto/modal-producto.componen
 import { ModalCrearProductoComponent } from './modal-crear-producto/modal-crear-producto.component';
 import { FormsModule } from '@angular/forms';
 import { PipesModule } from '../pipes/pipes.module';
+import { AjustesSalaComponent } from './ajustes-sala/ajustes-sala.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 
@@ -21,14 +23,18 @@ import { PipesModule } from '../pipes/pipes.module';
     ParticipantesComponent,
     ListaProductosComponent,
     ModalProductoComponent,
-    ModalCrearProductoComponent
+    ModalCrearProductoComponent,
+    AjustesSalaComponent,
+    ChatComponent
     ],
   exports: [
     AvatarSelectorComponent,
     HeaderComponent,
     ItemSalaComponent,
     ParticipantesComponent,
-    ListaProductosComponent
+    ListaProductosComponent,
+    AjustesSalaComponent,
+    ChatComponent
   ],
   imports: [
     CommonModule,

@@ -22,32 +22,46 @@
     <ion-slides class="mainSlide" #mainSlide [options]="slideOpts">
         <ion-slide class="ion-padding">
             <div class="cuadrado">
-                <div class="lista-participantes">
-                    <ion-list>
-                        <app-participantes *ngFor="let user of infoSala.participantes" [idUser]="user" [role]="role(user)"></app-participantes>
-                    </ion-list>
-                </div>
+                <div class="max">
+                    <div class="lista-participantes">
+                        <ion-list>
+                            <app-participantes *ngFor="let user of infoSala.participantes" [idUser]="user" [role]="role(user)"></app-participantes>
+                        </ion-list>
+                    </div>
+                    <ion-row>
+                        <ion-col size="12">
 
-                <ion-button shape="round" color="danger" *ngIf="!(role(myUid) === 2)" (click)="presentAlertConfirmAbandonarSala()">
-                    Abandonar sala
-                </ion-button>
-                <ion-button shape="round" color="warning" *ngIf="role(myUid) !== 0">
-                    Ajustes de sala
-                </ion-button>
+                            <ion-button shape="round" color="danger" *ngIf="!(role(myUid) === 2)" (click)="presentAlertConfirmAbandonarSala()">
+                                Abandonar sala
+                            </ion-button>
+                            <ion-button shape="round" color="warning" *ngIf="role(myUid) !== 0" (click)="presentModalAjustesSala()">
+                                Ajustes de sala
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
+
+                </div>
 
             </div>
         </ion-slide>
 
         <ion-slide class="ion-padding">
             <div class="cuadrado">
-                <app-lista-productos [role]="role(myUid)" [idUser]="myUid"></app-lista-productos>
+                <div class="max">
+                    <app-lista-productos [role]="role(myUid)" [idUser]="myUid"></app-lista-productos>
+
+                </div>
             </div>
 
         </ion-slide>
 
         <ion-slide class="ion-padding">
-            <div class="cuadrado"></div>
+            <div class="cuadrado">
+                <div class="max">
+                    <app-chat></app-chat>
 
+                </div>
+            </div>
         </ion-slide>
     </ion-slides>
 

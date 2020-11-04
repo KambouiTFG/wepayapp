@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Producto } from '../interfaces/interfaces';
 import { UiServiceService } from './ui-service.service';
+import { Subscription } from 'rxjs';
 
 
 @Injectable({
@@ -12,12 +13,14 @@ export class ProductoService {
   hayProducto = new EventEmitter();
   newUser = '';
 
+  subSupremo: Subscription;
+
 
   constructor(private db: AngularFirestore,
               private uiCtrl: UiServiceService) { }
 
   getProducoInfo(idSala: string) {
-    this.db.collection('salas').doc(idSala)
+    this.subSupremo = this.db.collection('salas').doc(idSala)
     .collection('productos').valueChanges({ idField: 'propertyId' })
     .subscribe( (r: any[]) => {
       this.productos = r;
@@ -28,6 +31,12 @@ export class ProductoService {
       }
       // console.log('suscripcion', r);
     });
+  }
+
+  pararSub(){
+    if (this.subSupremo) {
+      this.subSupremo.unsubscribe();
+    }
   }
 
 
@@ -55,7 +64,7 @@ export class ProductoService {
 
 
   async addUserTodosProductos(idSala: string, idUser: string) {
-    console.log('Estamo dentro', this.productos);
+    // console.log('Estamo dentro', this.productos);
     await this.productos.forEach(async p => {
       const idProducto = p.propertyId;
       const participantes = p.participantes;
@@ -66,9 +75,9 @@ export class ProductoService {
       .collection('productos').doc(idProducto).update({
         participantes
       }).then( () => {
-        console.log('usuario añadido al producto');
+        // console.log('usuario añadido al producto');
       }).catch( e => {
-        console.log('falló la operación');
+        // console.log('falló la operación');
       });
     });
   }
@@ -85,9 +94,9 @@ export class ProductoService {
       .collection('productos').doc(idProducto).update({
         participantes
       }).then( () => {
-        console.log('usuario borrado del producto');
+        // console.log('usuario borrado del producto');
       }).catch( e => {
-        console.log('falló la operación');
+        // console.log('falló la operación');
       });
     });
   }

@@ -12,7 +12,7 @@ import { User } from '../../interfaces/interfaces';
 })
 export class Tab1Page implements OnInit{
   nombreSala = '';
-  codigoSala = 'uubz468';
+  codigoSala = '';
   myInfo: User = {};
   haySalas = false;
 
@@ -25,12 +25,16 @@ export class Tab1Page implements OnInit{
   async ngOnInit() {
     this._user.hayUser.subscribe( r => {
       this.myInfo = r;
-      if (this.myInfo.salas.length === 0) {
+      if (this._sala.idSala !== '' && !this._user.myInfo.salas.includes(this._sala.idSala)) {
+        this._sala.salirSala();
+        this.uiCtrl.alertaInformativa('Ya no perteneces a esta sala');
+      }
+      if (this.myInfo.salas.length !== 0) {
         this.haySalas = true;
       } else {
         this.haySalas = false;
       }
-      console.log(this.myInfo);
+      // console.log(this.myInfo);
     });
   }
 
@@ -50,8 +54,8 @@ export class Tab1Page implements OnInit{
   }
 
   async buscarSala() {
-    if (this.codigoSala.length !== 7 ) {
-      await this.uiCtrl.presentAlert('El tamaño del código es de 7 caracteres');
+    if (this.codigoSala.length !== 7 &&  this.codigoSala.length !== 6) {
+      await this.uiCtrl.presentAlert('El tamaño del código es de 6 o 7 caracteres');
       return;
     }
     await this._sala.buscarSala(this.codigoSala);
