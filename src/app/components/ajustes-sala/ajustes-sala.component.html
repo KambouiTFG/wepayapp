@@ -9,6 +9,17 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
+
+    <div class="group-img ion-text-center">
+        <ion-item>
+            <ion-label color="primary">Seleccione imagen para la sala</ion-label>
+            <ion-button shape="round" color="primary" *ngIf="img !== infoSala.img" slot="end" (click)="cambiarImgSala()">
+                <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+            </ion-button>
+        </ion-item>
+        <app-group-img-selector *ngIf="showSlides" (avatarSel)="img = $event" [av]="infoSala.img || 'default.png'"></app-group-img-selector>
+    </div>
+
     <div class="ion-text-center">
         <form (ngSubmit)="cambiarNombre(f)" #f="ngForm">
             <ion-item class="prueba p-1">
@@ -21,25 +32,67 @@
             <span *ngIf="f.submitted && f.controls['nSala'].errors" class="text-danger animated fadeIn">Campo obligatorio</span>
         </form>
     </div>
-    <ion-item class="prueba p-1">
-        <ion-label position="floating" color="primary">Código de unión:</ion-label>
-        <ion-input [(ngModel)]="infoSala.code" name="codigo" readonly></ion-input>
-        <ion-buttons slot="end">
-            <span class="badge badge-success badge-pill" *ngIf="infoSala.open">Abierto</span>
-            <span class="badge badge-danger badge-pill" *ngIf="!infoSala.open">Cerrado</span>
-            <ion-toggle [(ngModel)]="infoSala.open" (click)="estadoSala()"></ion-toggle>
-        </ion-buttons>
-    </ion-item>
-    <div class="participantes">
-        <ion-list-header>
-            <ion-label>Participantes</ion-label>
+
+    <div class="ion-text-center">
+        <form (ngSubmit)="cambiarDescSala(d)" #d="ngForm">
+            <ion-item class="prueba p-1">
+                <ion-label position="floating" color="primary">Descripción de la sala:</ion-label>
+                <ion-textarea rows="3" cols="20" name="nDesc" [(ngModel)]="descSala"></ion-textarea>
+                <ion-button type="submit" slot="end" class="fadeIn" *ngIf="descSala !== infoSala.desc">
+                    <ion-icon slot="icon-only" name="save-outline"></ion-icon>
+                </ion-button>
+            </ion-item>
+            <span *ngIf="f.submitted && f.controls['nSala'].errors" class="text-danger animated fadeIn">Campo obligatorio</span>
+        </form>
+    </div>
+
+
+    <div class="prueba p-1">
+        <ion-item>
+            <ion-label position="floating" color="primary">Código de unión:</ion-label>
+            <ion-input [(ngModel)]="infoSala.code" name="codigo" readonly></ion-input>
+            <ion-buttons slot="end">
+                <span class="badge badge-success badge-pill" *ngIf="infoSala.open">Abierto</span>
+                <span class="badge badge-danger badge-pill" *ngIf="!infoSala.open">Cerrado</span>
+                <ion-toggle [(ngModel)]="infoSala.open" (click)="estadoSala()"></ion-toggle>
+            </ion-buttons>
+        </ion-item>
+    </div>
+
+
+    <div>
+        <ion-list-header class="ion-text-center">
+            <ion-label color="primary">Añadir participante bot
+            </ion-label>
         </ion-list-header>
+        <ion-row>
+
+            <ion-col size="9">
+                <ion-item class="prueba p-1">
+                    <ion-label position="stacked">Nombre participante bot</ion-label>
+                    <ion-input class="ion-no-border" type="text" name="creandoBot" [(ngModel)]="nombreBot"></ion-input>
+                </ion-item>
+
+            </ion-col>
+            <ion-col size="3" class="ion-align-self-center">
+                <ion-button shape="round" (click)="crearBot()">
+                    <ion-icon slot="icon-only" name="add"></ion-icon>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-list-header class="ion-text-center">
+            <ion-label>Participantes
+                <span class="badge badge-primary badge-pill">{{infoSala.participantes.length}}</span>
+            </ion-label>
+        </ion-list-header>
+    </div>
+
+    <div class="participantes">
         <ion-list>
             <ion-item *ngFor="let idUser of infoSala.participantes">
                 <app-participantes [idUser]="idUser"></app-participantes>
                 <ion-buttons slot="end" *ngIf="me(idUser)">
-
-                    <ion-button (click)="addAdmin(idUser)" *ngIf="!role(idUser)" color="success">
+                    <ion-button (click)="addAdmin(idUser)" *ngIf="!role(idUser) && !idUser.includes('-')" color="success">
                         <i class="fas fa-plus"></i>
                         <i class="fas fa-user-shield"></i>
                     </ion-button>

@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonInput } from '@ionic/angular';
+import { IonInput, ModalController } from '@ionic/angular';
 import { User } from '../../interfaces/interfaces';
 import { UsuarioService } from '../../services/usuario.service';
 import { UiServiceService } from '../../services/ui-service.service';
+import { AuthService } from '../../services/auth.service';
+import { SalaService } from '../../services/sala.service';
+import { ProductoService } from '../../services/producto.service';
+import { MisGastosComponent } from '../../components/mis-gastos/mis-gastos.component';
 
 @Component({
   selector: 'app-tab3',
@@ -17,9 +21,13 @@ export class Tab3Page implements OnInit{
   avatar = 'av-1.png';
   actualizando = false;
   usuario: User;
+  valido = true;
 
   constructor(private _user: UsuarioService,
-              private _uiCtrl: UiServiceService) {
+              private _auth: AuthService,
+              private _producto: ProductoService,
+              private _sala: SalaService,
+              private modalCtrl: ModalController) {
     
   }
 
@@ -42,6 +50,7 @@ export class Tab3Page implements OnInit{
     /* this._user.hayUser.subscribe( r => {
       console.log(r);
     }); */
+
   }
 
   dameFecha(ms: number) {
@@ -68,6 +77,10 @@ export class Tab3Page implements OnInit{
   async actualizar() {
     this.actualizando = true;
     if ( this.newName.value.toString().localeCompare(this.usuario.nombre) || this.avatar !== this.usuario.avatar) {
+      if (!this.validar(this.newName.value.toString())) {
+        this.actualizando = false;
+        return;
+      }
       this.usuario.nombre = this.newName.value.toString();
       this.usuario.avatar = this.avatar;
       console.log('cambiar');
@@ -79,8 +92,19 @@ export class Tab3Page implements OnInit{
     this.actualizando = false;
   }
 
-   editar() {
+  validar(nombre: string) {
+    console.log('NOMBRE: ', nombre);
+    if (nombre.length >= 4 && nombre.length <= 16) {
+      this.valido = true;
+      return true;
+    } else {
+      this.valido = false;
+      return false;
+    }
+  }
 
+   editar() {
+    this.valido = true;
     this.edit = !this.edit;
     this.avatar = this.usuario.avatar;
     if (this.edit) {
@@ -88,8 +112,22 @@ export class Tab3Page implements OnInit{
         this.newName.setFocus();
       }, 150);
     }
-    
     // console.log(this.newName);
   }
 
+  resetPass() {
+    this._auth.resetPass(this.usuario.email);
+  }
+
+
+  async misGastos() {
+    const modal = await this.modalCtrl.create({
+      component: MisGastosComponent,
+      cssClass: 'my-custom-modal-css',
+      componentProps: {
+        Salas: this.usuario.salas
+      }
+    });
+    await modal.present();
+  }
 }

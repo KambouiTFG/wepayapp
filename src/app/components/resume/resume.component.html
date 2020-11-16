@@ -1,0 +1,42 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="salir()" color="primary">
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title mode="md">Resumen</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-no-padding">
+
+    <div class="cuadrado">
+        <div class="max">
+
+            <div class="mb-1 text-center">
+                <strong>Participantes</strong>
+                <span class="badge badge-pill badge-primary">{{participantes.length}}</span>
+            </div>
+
+            <ion-list-header class="list-header" color="primary" mode="md">
+                <ion-label class="td1">Nombre</ion-label>
+                <ion-label class="td1">Participación</ion-label>
+                <ion-label class="td2">Productos</ion-label>
+            </ion-list-header>
+
+            <div class="lista-productos">
+                <table class="table table-hover">
+                    <tbody class="body-table">
+                        <tr *ngFor="let uid of participantes">
+                            <td class="td1 ion-align-items-center"><small>{{getNombre(uid)}}</small></td>
+                            <td class="td1"><span class="badge badge-pill badge-primary">{{calculaPart(uid) |  number : '1.2-2'}} €</span></td>
+                            <td class="td2">
+                                <span class="badge badge-pill badge-info mx-1" *ngFor="let producto of getProductos(uid)">{{producto}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</ion-content>

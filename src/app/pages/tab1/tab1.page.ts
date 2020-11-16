@@ -26,6 +26,9 @@ export class Tab1Page implements OnInit{
     this._user.hayUser.subscribe( r => {
       this.myInfo = r;
       if (this._sala.idSala !== '' && !this._user.myInfo.salas.includes(this._sala.idSala)) {
+        console.log('IDSALA', this._sala.idSala);
+        console.log('myInfoSalas', this._user.myInfo.salas);
+
         this._sala.salirSala();
         this.uiCtrl.alertaInformativa('Ya no perteneces a esta sala');
       }
@@ -43,7 +46,7 @@ export class Tab1Page implements OnInit{
   }
 
   async crearSala() {
-    if (this.nombreSala.length < 4 ) {
+    if (this.nombreSala.length < 4 ||  this.nombreSala.length > 16) {
       this.uiCtrl.presentAlert('El nombre de la sala debe tener entre 4 y 16 caracteres');
       return;
     }

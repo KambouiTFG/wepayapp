@@ -67,6 +67,7 @@ export class UsuarioService {
     }
     await this.db.collection('users').doc(userUid).update(user).then( () => {
       // console.log('Usuario actualizado');
+      this.uiCtrl.alertaInformativa('Cambios actualizados', 0.5);
     });
   }
 

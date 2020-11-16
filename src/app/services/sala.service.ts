@@ -85,12 +85,14 @@ export class SalaService {
   salirSala() {
     // console.log('salir sala');
     this.haySala.emit(null);
+    this.idSala = '';
     if (this.salaSub) {
       // console.log('CANCELAMOS SUBSCRIPTION');
       // console.log('AKA MATAMOOO');
       this.salaSub.unsubscribe();
     }
-    this.navCtrl.navigateRoot('/main/tabs/home');
+    // this.navCtrl.navigateRoot('/main/tabs/home');
+    this.navCtrl.navigateRoot('/main/home');
   }
 
   setUsuario(uid: string) {
@@ -126,6 +128,7 @@ export class SalaService {
       owner : this.myUID,
       admins : [],
       participantes: [this.myUID],
+      desc: '',
       img : '',
       code: Math.random().toString(36).substr(6, 9),
       open: true,
@@ -162,9 +165,11 @@ export class SalaService {
         this.infoSala = r;
         this.haySala.emit(this.infoSala);
         if (this.infoSala.participantes.includes(this.myUID)) {
-          this.navCtrl.navigateRoot('/main/tabs/room');
+          // this.navCtrl.navigateRoot('/main/tabs/room');
+          this.navCtrl.navigateRoot('/main/room');
         } else {
-          this.navCtrl.navigateRoot('/main/tabs/home');
+          // this.navCtrl.navigateRoot('/main/tabs/home');
+          this.navCtrl.navigateRoot('/main/home');
         }
       } else {
         this.infoSala = null;
@@ -219,8 +224,11 @@ export class SalaService {
     }
     await this.db.collection('salas').doc(idSala).update({
       participantes: arrTemp
-    }).then( () => {
+    }).then( async () => {
       // console.log('Sala actualizada');
+      if (idUser.includes('-')) {
+        await this._producto.addUserTodosProductos(idSala, idUser);
+      }
     });
   }
   // Borrar usuario de una sala
@@ -236,7 +244,9 @@ export class SalaService {
       // console.log('Sala actualizada');
       // Borrar sala del usuario
     });
-    await this._user.deleteUserSala(this.idSala, idUser);
+    if (!idUser.includes('-')) {
+      await this._user.deleteUserSala(this.idSala, idUser);
+    }
     await this._producto.deleteUserTodosProductos(this.idSala, idUser);
     if (this.myUID === idUser) {
       this.salirSala();
@@ -254,21 +264,45 @@ export class SalaService {
     this.uiCtrl.dismisLoading(loadingg);
   }
 
+  async cambioDescSala(desc: string) {
+    // console.log('cambio nombre sala');
+    const loadingg = await this.uiCtrl.presentLoading('Cambiando descripción');
+    await this.db.collection('salas').doc(this.idSala).update({
+      desc
+    }).then( () => {
+      // console.log('nombre cambiado');
+    });
+    this.uiCtrl.dismisLoading(loadingg);
+  }
+
   async cambiarEstado(open: boolean) {
     // console.log('cambiar estado sala');
     let msg;
-    if (open) {
+    (open) ? msg = 'Abriendo sala' : msg = 'Cerrando sala';
+
+    /* if (open) {
       msg = 'Abriendo sala';
     } else {
       msg = 'Cerrando sala';
 
-    }
+    } */
     const loadingg = await this.uiCtrl.presentLoading(msg);
     // console.log('OPEN: ', open);
     await this.db.collection('salas').doc(this.idSala).update({
       open
     }).then(() => {
       // console.log('cambiando estado de la sala', open);
+    });
+    this.uiCtrl.dismisLoading(loadingg);
+  }
+
+  async cambioImgSala(img: string) {
+    // console.log('cambio nombre sala');
+    const loadingg = await this.uiCtrl.presentLoading('Cambiando Imagen');
+    await this.db.collection('salas').doc(this.idSala).update({
+      img
+    }).then( () => {
+      // console.log('nombre cambiado');
     });
     this.uiCtrl.dismisLoading(loadingg);
   }
@@ -310,15 +344,17 @@ export class SalaService {
   async borrarSala() {
     // console.log('borrar sala');
     const loadingg = await this.uiCtrl.presentLoading('Borrando sala');
+    let isala = this.idSala;
     this.infoSala.participantes.forEach(async user => {
       // if (user !== this.infoSala.owner) {
         await this._user.deleteUserSala(this.idSala, user);
         if (this.myUID === user) {
+          console.log('llegadmo');
           this.salirSala();
         }
       // }
     });
-    await this.db.collection('salas').doc(this.idSala).delete();
+    await this.db.collection('salas').doc(isala).delete();
     this.salirSala();
     this.uiCtrl.dismisLoading(loadingg);
     // await this._user.deleteUserSala(this.idSala, this.infoSala.owner);
@@ -332,5 +368,13 @@ export class SalaService {
     if (this.salaSub) {
       this.salaSub.unsubscribe();
     }
+  }
+
+
+  async addBotSala(nombre: string) {
+    let id = Math.random().toString(35).substr(2, 8).toLocaleUpperCase();
+    id = `bot-${nombre}-${id}`;
+    console.log(id, this.idSala, id.split('-')[1]);
+    await this.addSalaUser(this.idSala, id);
   }
 }

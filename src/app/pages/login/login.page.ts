@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, ModalController } from '@ionic/angular';
+import { OtraPasswordComponent } from 'src/app/components/otra-password/otra-password.component';
 import { AuthService } from '../../services/auth.service';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +40,9 @@ export class LoginPage implements OnInit {
     avatar: 'av-1.png'
   };
 
-  constructor(private _auth: AuthService) { }
+  constructor(private _auth: AuthService,
+              private _uiS: UiServiceService,
+              private modalCtrl: ModalController) { }
 
   ngOnInit() {
 
@@ -66,15 +70,18 @@ export class LoginPage implements OnInit {
 
 
 
-  mostrarReg() {
+  mostrarReg( form: NgForm) {
+    form.resetForm();
     this.enLogin = false;
     this.slides.lockSwipes( false );
-    this.slides.slideTo(1);
+    this.slides.slideTo(2);
     this.slides.lockSwipes( true );
 
   }
 
-  mostrarLogin() {
+  mostrarLogin( form: NgForm ) {
+    form.resetForm();
+
     this.enLogin = true;
 
     this.slides.lockSwipes( false );
@@ -83,5 +90,7 @@ export class LoginPage implements OnInit {
 
   }
 
-
+  async resetPass() {
+    await this._auth.resetPass(this.loginUser.email);
+  }
 }

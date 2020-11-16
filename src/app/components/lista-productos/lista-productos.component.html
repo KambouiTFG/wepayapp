@@ -2,7 +2,7 @@
     <strong>Mi participación: </strong><span class="badge badge-pill badge-primary">{{miPart |  number : '1.2-2'}} €</span>
 </div>
 
-<ion-list-header color="primary">
+<ion-list-header color="primary" mode="md">
     <ion-label>Producto</ion-label>
     <ion-label>Unidades</ion-label>
     <ion-label>Precio</ion-label>
@@ -33,8 +33,11 @@
                     Añadir
                     <i class="fas fa-cart-plus"></i>
                 </button>
+                <button type="button" class="btn btn-info badge-pill mx-2" (click)="presentModalResumen()">
+                    <span class="mx-1"><i class="fas fa-clipboard-list"></i></span>
+                </button>
             </ion-col>
-            <ion-col size="6" class="ion-text-right">
+            <ion-col size="6" class="ion-text-right ion-align-items-center">
                 <strong>Total</strong>
                 <span class="badge badge-pill badge-primary ml-1">{{total |  number : '1.2-2'}} €</span>
             </ion-col>

@@ -14,12 +14,12 @@ export interface Sala {
     img?: string;
     code?: string;
     open?: boolean;
+    desc?: string
     owner?: string;
     admins?: string[];
     participantes?: string[];
     uid?: string;
     propertyId?: string;
-
 }
 
 export interface Producto {

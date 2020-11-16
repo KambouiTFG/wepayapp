@@ -1,0 +1,10 @@
+<ion-row>
+    <ion-col>
+        <ion-slides [options]="avatarSlide" (ionSlidesDidLoad)="update()">
+            <ion-slide *ngFor="let avatar of avatars">
+                <ion-img class="pick-avatar" src="/assets/group/{{avatar.img}}" [ngClass]="{'pick-avatar-seleccionado': avatar.seleccionado}" (click)="seleccionarAvatar( avatar )"></ion-img>
+            </ion-slide>
+        </ion-slides>
+    </ion-col>
+</ion-row>
+<small>Iconos diseñados por <span class="badge badge-pill badge-info">Roundicons</span> from <span class="badge badge-pill badge-info">www.flaticon.es</span></small>

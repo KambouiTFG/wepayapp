@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AjustesSalaComponent } from './ajustes-sala.component';
+import { GroupImgSelectorComponent } from './group-img-selector.component';
 
-describe('AjustesSalaComponent', () => {
-  let component: AjustesSalaComponent;
-  let fixture: ComponentFixture<AjustesSalaComponent>;
+describe('GroupImgSelectorComponent', () => {
+  let component: GroupImgSelectorComponent;
+  let fixture: ComponentFixture<GroupImgSelectorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AjustesSalaComponent ],
+      declarations: [ GroupImgSelectorComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AjustesSalaComponent);
+    fixture = TestBed.createComponent(GroupImgSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

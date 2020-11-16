@@ -47,11 +47,11 @@ export class ModalProductoComponent implements OnInit {
     }
 
     if (this.producto.precio <= 0) {
-      f.controls.precioProducto.setErrors({'incorrect': true});
+      f.controls.precioProducto2.setErrors({'incorrect': true});
     }
 
     if (this.producto.precio <= 0) {
-      f.controls.unidadProducto.setErrors({'incorrect': true});
+      f.controls.unidadProducto2.setErrors({'incorrect': true});
     }
 
     if (f.invalid) {

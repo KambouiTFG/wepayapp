@@ -32,3 +32,22 @@
     --spinner-color: black;
     color: black;
 }
+
+@media only screen and (min-width: 768px) {
+    .my-custom-modal-css .modal-wrapper {
+        height: 90%;
+        width: 60%;
+        top: 5%;
+        position: absolute;
+        display: block;
+        border-radius: 20px;
+    }
+    .my-custom-modal-css-reset-password .modal-wrapper {
+        height: 50%;
+        width: 60%;
+        top: 20%;
+        position: absolute;
+        display: block;
+        border-radius: 20px;
+    }
+}

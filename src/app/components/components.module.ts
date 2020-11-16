@@ -12,6 +12,10 @@ import { FormsModule } from '@angular/forms';
 import { PipesModule } from '../pipes/pipes.module';
 import { AjustesSalaComponent } from './ajustes-sala/ajustes-sala.component';
 import { ChatComponent } from './chat/chat.component';
+import { OtraPasswordComponent } from './otra-password/otra-password.component';
+import { ResumeComponent } from './resume/resume.component';
+import { GroupImgSelectorComponent } from './group-img-selector/group-img-selector.component';
+import { MisGastosComponent } from './mis-gastos/mis-gastos.component';
 
 
 
@@ -25,7 +29,11 @@ import { ChatComponent } from './chat/chat.component';
     ModalProductoComponent,
     ModalCrearProductoComponent,
     AjustesSalaComponent,
-    ChatComponent
+    ChatComponent,
+    OtraPasswordComponent,
+    ResumeComponent,
+    GroupImgSelectorComponent,
+    MisGastosComponent
     ],
   exports: [
     AvatarSelectorComponent,
@@ -34,7 +42,11 @@ import { ChatComponent } from './chat/chat.component';
     ParticipantesComponent,
     ListaProductosComponent,
     AjustesSalaComponent,
-    ChatComponent
+    ChatComponent,
+    OtraPasswordComponent,
+    ResumeComponent,
+    GroupImgSelectorComponent,
+    MisGastosComponent
   ],
   imports: [
     CommonModule,

@@ -3,6 +3,8 @@ import { SalaService } from '../../services/sala.service';
 import { ProductoService } from '../../services/producto.service';
 import { Producto } from '../../interfaces/interfaces';
 import { UiServiceService } from '../../services/ui-service.service';
+import { ResumeComponent } from '../resume/resume.component';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-lista-productos',
@@ -19,7 +21,8 @@ export class ListaProductosComponent implements OnInit {
 
   constructor(private _sala: SalaService,
               private _producto: ProductoService,
-              private _uiCtrl: UiServiceService) { }
+              private _uiCtrl: UiServiceService,
+              private modalCtrl: ModalController) { }
 
   ngOnInit() {
     /* this._sala.haySala.subscribe( (r) => {
@@ -101,5 +104,18 @@ export class ListaProductosComponent implements OnInit {
       }
     });
     // console.log('MiPart: ', this.miPart);
+  }
+
+
+  async presentModalResumen() {
+    const modal = await this.modalCtrl.create({
+      component: ResumeComponent,
+      cssClass: 'my-custom-modal-css',
+      componentProps: {
+        idSala: this._sala.idSala,
+        productos: this.productos
+      }
+    });
+    await modal.present();
   }
 }

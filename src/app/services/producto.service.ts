@@ -127,6 +127,20 @@ export class ProductoService {
     }); */
   }
 
+  getGasto(idSala: string){
+    return this.db.collection('salas').doc(idSala).collection('productos').get();
+    
+    
+    /* .toPromise();
+    let part = 0;
+    data.forEach((producto) => {
+      if (producto.data().participantes.includes(idUser)) {
+        part += (producto.data().precio * producto.data().unidad) / producto.data().participantes.length;
+      }
+    });
+    return part; */
+  }
+
 
 
 

@@ -19,33 +19,26 @@ export class AuthService {
               private _sala: SalaService,
               private _producto: ProductoService) {
 
-    this.fAuth.authState.subscribe( r => {
-      if (r) {
-        this.userOn = r.uid;
-        this.navCtrl.navigateRoot('/main/tabs/home');
-        this._user.setUsuario(r.uid);
-        this._sala.setUsuario(r.uid);
+    this.fAuth.authState.subscribe( user => {
+      if (user) {
+        this.userOn = user.uid;
+        this.navCtrl.navigateRoot('/main/home');
+        this._user.setUsuario(user.uid);
+        this._sala.setUsuario(user.uid);
       } else {
         this.userOn = null;
         this.pararSubs();
-        // console.log('SALIMOS?');
         this.navCtrl.navigateRoot('/login');
         this._user.setUsuario(null);
         this._sala.setUsuario(null);
-        // console.log('salimooooooooooos?');
       }
-      /// console.log('HAY USUARIO?', this.userOn);
     });
   }
 
   async login(email: string, pass: string) {
     const loading = await this.uiCtrl.presentLoading('Entrando');
     await this.fAuth.signInWithEmailAndPassword(email, pass)
-    .then( r => {
-      // console.log('Iniciando sesion correctamente');
-      // console.log(r);
-    }).catch( e => {
-      // console.log(e);
+    .catch( () => {
       this.uiCtrl.alertaInformativa('Email y/o contraseña incorrectos');
     });
     await this.uiCtrl.dismisLoading(loading);
@@ -54,10 +47,8 @@ export class AuthService {
   async register(user) {
     await this.fAuth.createUserWithEmailAndPassword(user.email, user.password).then(async (resp) => {
       await this._user.grabarUser(resp.user.uid, user);
-      // console.log(('Usuario creado correctamente'));
-      this.navCtrl.navigateRoot('/main/tabs/home');
-    }).catch(err => {
-      // console.log(err);
+      this.navCtrl.navigateRoot('/main/home');
+    }).catch(() => {
       this.uiCtrl.alertaInformativa('Email ya registrado');
     });
   }
@@ -69,13 +60,22 @@ export class AuthService {
     const loading = await this.uiCtrl.presentLoading('Hasta luego');
     await this.fAuth.signOut();
     await this.uiCtrl.dismisLoading(loading);
-    // this.navCtrl.navigateRoot('/login');
   }
 
+
+  async resetPass(email: string) {
+      const resetEmail = await this.uiCtrl.presentModalResetPassword(email);
+      if (resetEmail) {
+        await this.fAuth.sendPasswordResetEmail(resetEmail).then( () => {
+          this.uiCtrl.alertaInformativa('Se ha enviado con correo al email introducido, revise la bandeja de entrada o en spam', 3.5);
+        }).catch( () => {
+          this.uiCtrl.alertaInformativa('Email inexistente', 3.5);
+        });
+      }
+  }
   pararSubs() {
     this._sala.pararSubs();
     this._user.pararSubs();
     this._producto.pararSub();
   }
-  
 }

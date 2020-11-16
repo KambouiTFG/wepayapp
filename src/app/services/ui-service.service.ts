@@ -3,6 +3,8 @@ import { AlertController, LoadingController, ModalController, ToastController } 
 import { Producto, Sala } from '../interfaces/interfaces';
 import { ModalProductoComponent } from '../components/modal-producto/modal-producto.component';
 import { ModalCrearProductoComponent } from '../components/modal-crear-producto/modal-crear-producto.component';
+import { OtraPasswordComponent } from '../components/otra-password/otra-password.component';
+import { ResumeComponent } from '../components/resume/resume.component';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +21,11 @@ export class UiServiceService {
                }
 
 
-  async alertaInformativa(message) {
+  async alertaInformativa(message, dur?: number) {
     const toast = await this.toastCtrl.create({
       message,
       position: 'top',
-      duration: 2000
+      duration:  dur * 1000 || 2000
     });
     toast.present();
   }
@@ -76,6 +78,7 @@ export class UiServiceService {
    async presentModalProducto(producto: Producto, idSala: string, role: number) {
     const modal = await this.modalCtrl.create({
       component: ModalProductoComponent,
+      cssClass: 'my-custom-modal-css',
       componentProps: {
         infoProducto: producto,
         idSala,
@@ -96,6 +99,7 @@ export class UiServiceService {
   async presentModalCrearProducto(idSala: string) {
     const modal = await this.modalCtrl.create({
       component: ModalCrearProductoComponent,
+      cssClass: 'my-custom-modal-css',
       componentProps: {
         idSala
       }
@@ -109,4 +113,24 @@ export class UiServiceService {
       return null;
     }
   }
+
+  async presentModalResetPassword(email?: string) {
+    const modal = await this.modalCtrl.create({
+      component: OtraPasswordComponent,
+      cssClass: 'my-custom-modal-css-reset-password',
+      componentProps: {
+        email
+      }
+    });
+    await modal.present();
+
+    const {data} = await modal.onDidDismiss();
+    if (data) {
+      return data.email;
+    } else {
+      return null;
+    }
+  }
+
+  
 }

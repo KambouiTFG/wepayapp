@@ -15,8 +15,12 @@ export class AjustesSalaComponent implements OnInit, OnDestroy {
 
   infoSala: Sala;
   nombreSala: string;
+  descSala: string;
   myUid: string;
   subHaySala: Subscription;
+  nombreBot = '';
+  showSlides = false;
+  img;
 
   constructor(private modalCtrl: ModalController,
               private alertCtrl: AlertController,
@@ -34,25 +38,70 @@ export class AjustesSalaComponent implements OnInit, OnDestroy {
     this.subHaySala = this._sala.haySala.subscribe( (r) => {
       console.log('cambio', r);
       if (r) {
-        this.infoSala = r;
+        this.config(r);
+        /* this.infoSala = r;
         this.nombreSala = this.infoSala.nombre.toString();
-        this.myUid = this._sala.myUID;
+        this.img = this.infoSala.img;
+        if (this.infoSala.desc) {
+          this.descSala = this.infoSala.desc.toString();
+        } else {
+          this.descSala = '';
+        }
+        this.myUid = this._sala.myUID;*/
       }
     });
-    this.infoSala = this._sala.infoSala;
+    this.config(this._sala.infoSala);
+    /* this.infoSala = this._sala.infoSala;
     this.nombreSala = this.infoSala.nombre.toString();
+    this.img = this.infoSala.img;
+    if (this.infoSala.desc) {
+      this.descSala = this.infoSala.desc.toString();
+    } else {
+      this.descSala = '';
+    }
+    this.myUid = this._sala.myUID; */
+    
+    /* setTimeout(() => {
+      this.slide = true;
+    }, 0); */
+  }
+
+  config(info) {
+    this.infoSala = info;
+    this.nombreSala = this.infoSala.nombre.toString();
+    this.img = this.infoSala.img;
+    if (this.infoSala.desc) {
+      this.descSala = this.infoSala.desc.toString();
+    } else {
+      this.descSala = '';
+    }
     this.myUid = this._sala.myUID;
   }
+
+  ionViewDidEnter() {
+    this.showSlides = true;
+}
 
   async cambiarNombre(f: NgForm){
     if (f.invalid) {
       return;
     }
-    //await this._sala.cambioNombreSala(this.nombreSala);
+    await this._sala.cambioNombreSala(this.nombreSala);
+  }
+
+  async cambiarDescSala(f: NgForm){
+    if (f.invalid) {
+      return;
+    }
+    await this._sala.cambioDescSala(this.descSala);
   }
 
   async estadoSala() {
     await this._sala.cambiarEstado(!this.infoSala.open);
+  }
+
+  async cambiarImgSala() {
+    await this._sala.cambioImgSala(this.img);
   }
 
   me(idUser) {
@@ -125,6 +174,18 @@ export class AjustesSalaComponent implements OnInit, OnDestroy {
       ]
     });
     await alert.present();
+  }
+
+
+  async crearBot() {
+    if (this.nombreBot.length < 4 ||  this.nombreBot.length > 16) {
+      this.uiCtrl.presentAlert('El nombre del bot debe tener entre 4 y 16 caracteres');
+      return;
+    }
+    const loading = await this.uiCtrl.presentLoading('Creando Bot');
+    this._sala.addBotSala(this.nombreBot);
+    await this.uiCtrl.dismisLoading(loading);
+    this.nombreBot = '';
   }
 
 

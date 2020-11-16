@@ -1,67 +1,80 @@
 <app-header titulo="Mi Perfil"></app-header>
-<ion-content *ngIf="usuario">
-    <ion-row class="top-20">
+<ion-content *ngIf="usuario" class="ion-padding" color="light">
+    <div class="cuadrado ion-padding">
 
-        <ion-col size="12" class="ion-text-center">
-            <img src="assets/avatars/{{usuario.avatar}}" class="img-avatar" *ngIf="!edit">
-            <img src="assets/avatars/{{avatar}}" class="img-avatar" *ngIf="edit">
-        </ion-col>
+        <ion-row class="top-20">
 
-    </ion-row>
+            <ion-col size="12" class="ion-text-center">
+                <img src="assets/avatars/{{usuario.avatar}}" class="img-avatar" *ngIf="!edit">
+                <img src="assets/avatars/{{avatar}}" class="img-avatar" *ngIf="edit">
+            </ion-col>
 
-    <app-avatar-selector (avatarSel)="avatar = $event" [av]="usuario.avatar" *ngIf="edit"></app-avatar-selector>
+        </ion-row>
 
-    <ion-row>
-        <ion-col>
+        <app-avatar-selector (avatarSel)="avatar = $event" [av]="usuario.avatar" *ngIf="edit"></app-avatar-selector>
 
-            <ion-list>
+        <ion-row>
+            <ion-col>
 
-                <ion-item [disabled]="edit">
-                    <ion-label>
-                        <h2 class="text-tertiary">Email</h2>
-                        <p class="ion-text-center">{{usuario.email}}</p>
-                    </ion-label>
-                </ion-item>
-                <ion-item [disabled]="edit">
-                    <ion-label>
-                        <h2 class="text-tertiary">Fecha de creación</h2>
-                        <p class="ion-text-center">{{dameFecha(usuario.creado)}}</p>
-                    </ion-label>
-                </ion-item>
+                <ion-list>
 
-                <ion-item *ngIf="!edit">
-                    <ion-label>
-                        <h2 class="text-tertiary">Nombre</h2>
-                        <p class="ion-text-center">{{usuario.nombre}}</p>
-                    </ion-label>
-                </ion-item>
+                    <ion-item [disabled]="edit">
+                        <ion-label>
+                            <h2 class="text-tertiary">Email</h2>
+                            <p class="ion-text-center">{{usuario.email}}</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item [disabled]="edit">
+                        <ion-label>
+                            <h2 class="text-tertiary">Fecha de creación</h2>
+                            <p class="ion-text-center">{{dameFecha(usuario.creado)}}</p>
+                        </ion-label>
+                    </ion-item>
 
-                <ion-item *ngIf="edit">
-                    <ion-label position="stacked">Nombre</ion-label>
-                    <ion-input #focuss class="rr" name="nombre" type="text" [ngModel]="usuario.nombre" required minlength="2" maxlength="12"></ion-input>
-                </ion-item>
-            </ion-list>
-        </ion-col>
-    </ion-row>
+                    <ion-item *ngIf="!edit">
+                        <ion-label>
+                            <h2 class="text-tertiary">Nombre</h2>
+                            <p class="ion-text-center">{{usuario.nombre}}</p>
+                        </ion-label>
+                    </ion-item>
 
-    <ion-row>
-        <ion-col class="ion-text-center" *ngIf="edit">
-            <ion-button type="submit" color="tertiary" shape="round" *ngIf="!actualizando" (click)="actualizar()">
-                Actualizar
-            </ion-button>
-            <ion-button type="submit" color="tertiary" shape="round" *ngIf="actualizando" (click)="actualizar()" [disabled]="actualizando">
-                <ion-spinner name="circles"></ion-spinner>
-            </ion-button>
+                    <ion-item *ngIf="edit">
+                        <ion-label position="stacked">Nombre</ion-label>
+                        <ion-input #focuss class="rr" name="nombre" type="text" [ngModel]="usuario.nombre"></ion-input>
+                        <span *ngIf="!valido" class="text-danger animated fadeIn">El nombre es obligatorio, mínimo 4 y máximo 16 caracteres</span>
 
-            <ion-button color="danger" shape="round" (click)="editar()" [disabled]="actualizando">
-                Cancelar
-            </ion-button>
-        </ion-col>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
 
-        <ion-col class="ion-text-center" *ngIf="!edit">
-            <ion-button color="tertiary" shape="round" (click)="editar()">
-                Editar
-            </ion-button>
-        </ion-col>
-    </ion-row>
+        <ion-row>
+            <ion-col class="ion-text-center" *ngIf="edit">
+                <ion-button type="submit" color="tertiary" shape="round" *ngIf="!actualizando" (click)="actualizar()">
+                    Actualizar
+                </ion-button>
+                <ion-button type="submit" color="tertiary" shape="round" *ngIf="actualizando" (click)="actualizar()" [disabled]="actualizando">
+                    <ion-spinner name="circles"></ion-spinner>
+                </ion-button>
+
+                <ion-button color="danger" shape="round" (click)="editar()" [disabled]="actualizando">
+                    Cancelar
+                </ion-button>
+            </ion-col>
+
+            <ion-col size="12" class="ion-text-center" *ngIf="!edit">
+                <ion-button color="tertiary" shape="round" (click)="editar()">
+                    Editar
+                </ion-button>
+                <ion-button color="secondary" shape="round" (click)="misGastos()">
+                    Ver mis gastos
+                </ion-button>
+            </ion-col>
+            <ion-col size="12" class="ion-text-center" *ngIf="!edit">
+                <ion-button color="tertiary" shape="round" fill="clear" (click)="resetPass()">
+                    Cambiar contraseña
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </div>
 </ion-content>

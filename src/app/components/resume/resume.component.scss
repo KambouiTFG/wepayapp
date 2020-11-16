@@ -1,0 +1,38 @@
+.lista-productos {
+    width: 100%;
+    height: 85%;
+    overflow-y: auto;
+    background-color: var(--ion-color-light);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.list-header {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.cuadrado {
+    max-width: 1000px;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+.max {
+    height: 100%;
+    margin: 0px auto;
+    max-width: 800px;
+}
+
+.td1 {
+    width: 25%;
+    vertical-align: middle;
+}
+
+.td2 {
+    width: 50%;
+}

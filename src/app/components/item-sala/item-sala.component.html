@@ -13,16 +13,20 @@
 </ion-item>
 <ion-item *ngIf="infoSala">
     <ion-avatar slot="start">
-        <img src="/assets/avatars/av-1.png" />
+        <img src="/assets/group/{{infoSala.img || 'default.png'}}" />
     </ion-avatar>
     {{infoSala.nombre}}
     <ion-buttons slot="end">
-        <h5 class="text-primary">
+
+        <h5 class="text-primary" *ngIf="!gastos">
             <i class="fas fa-crown mr-3" *ngIf="owner"></i>
             <i class="fas fa-user-shield mr-3" *ngIf="admin"></i>
         </h5>
-        <h5 class="text-primary">{{infoSala.participantes.length}}
+        <h5 class="text-primary" *ngIf="!gastos">{{infoSala.participantes.length}}
             <i class="fas fa-users"></i>
+        </h5>
+        <h5 class="text-primary" *ngIf="gastos">Gasto:
+            <span class="badge badge-info badge-pill">{{part|  number : '1.2-2'}} €</span>
         </h5>
         <!-- <ion-icon slot="icon-only" name="people-outline" color="primary" class="ml-2"></ion-icon> -->
         <!-- <ion-icon slot="icon-only" name="chevron-forward-outline" color="primary" class="ml-2"></ion-icon> -->

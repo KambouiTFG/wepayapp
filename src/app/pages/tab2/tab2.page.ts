@@ -104,7 +104,8 @@ export class Tab2Page implements OnInit {
 
   async presentModalAjustesSala() {
     const modal = await this.modalCtrl.create({
-      component: AjustesSalaComponent
+      component: AjustesSalaComponent,
+      cssClass: 'my-custom-modal-css'
     });
     await modal.present();
   }

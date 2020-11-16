@@ -42,16 +42,16 @@
 
         <ion-item class="prueba p-2">
             <div class="form-group m-2">
-                <label for="unidadProducto">Unidades <span class="text-danger">*</span></label>
+                <label>Unidades <span class="text-danger">*</span></label>
                 <div class="input-group">
-                    <input type="number" step="1" class="form-control" id="unidadProducto" name="unidadProducto" [(ngModel)]="producto.unidad" required>
+                    <input type="number" step="1" class="form-control" name="unidadProducto" [(ngModel)]="producto.unidad" required>
                 </div>
                 <span *ngIf="f.submitted && f.controls['unidadProducto'].errors" class="text-danger animated fadeIn">Campo obligatorio, mayor que 0</span>
             </div>
             <div class="form-group m-2">
-                <label for="precioProducto">Precio unidad <span class="text-danger">*</span></label>
+                <label>Precio unidad <span class="text-danger">*</span></label>
                 <div class="input-group">
-                    <input type="number" step="0.01" class="form-control" id="precioProducto" name="precioProducto" [(ngModel)]="producto.precio" required>
+                    <input type="number" step="0.01" class="form-control" name="precioProducto" [(ngModel)]="producto.precio" required>
                     <div class="input-group-append">
                         <span class="input-group-text">€</span>
                     </div>

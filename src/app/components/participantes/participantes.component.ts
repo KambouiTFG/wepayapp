@@ -22,11 +22,27 @@ export class ParticipantesComponent implements OnInit {
 
     this._user.hayCambio.subscribe((r) => {
       if (r) {
-        console.log('CAMBIO en participantes');
-        this.infoUser = this._user.getNombre(this.idUser);
+        // console.log('CAMBIO en participantes');
+        // this.infoUser = this._user.getNombre(this.idUser);
+        if (!this.idUser.includes('-')) {
+          this.infoUser = this._user.getNombre(this.idUser);
+        } else {
+          this.infoUser = {
+            nombre: this.idUser.split('-')[1],
+            avatar: 'bot.png'
+          };
+        }
       }
     });
     // console.log('PARTICIPANTES CPM', this.idUser);
-    this.infoUser = this._user.getNombre(this.idUser);
+    // this.infoUser = this._user.getNombre(this.idUser);
+    if (!this.idUser.includes('-')) {
+      this.infoUser = this._user.getNombre(this.idUser);
+    } else {
+      this.infoUser = {
+        nombre: this.idUser.split('-')[1],
+        avatar: 'bot.png'
+      };
+    }
   }
 }
