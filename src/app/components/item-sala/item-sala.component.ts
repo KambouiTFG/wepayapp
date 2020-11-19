@@ -38,12 +38,12 @@ export class ItemSalaComponent implements OnInit, OnDestroy {
     if (this._sala.myUID === null){
       return;
     }
-
     if ( this.gastos ) {
       this.subGastos = this._producto.getGasto(this.idSala).subscribe( p => {
         p.forEach( producto => {
           if (producto.data().participantes.includes(this._sala.myUID)) {
-            this.part += (producto.data().precio * producto.data().unidad) / producto.data().participantes.length;
+            this.part += (producto.data().precio * producto.data().unidad)
+                         / producto.data().participantes.length;
           }
         });
         this.sumaGasto.emit(this.part);
