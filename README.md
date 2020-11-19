@@ -2,6 +2,10 @@
 
 _Diseño e implementación de una aplicación online para la organización económica de compras en grupo_
 
+Visita la página web para ver la aplicación en funcionamiento
+            
+https://kambowepay.web.app
+
 ## Comenzando 🚀
 
 _Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
