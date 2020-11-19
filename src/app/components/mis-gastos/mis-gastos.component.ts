@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { SalaService } from '../../services/sala.service';
-import { ProductoService } from '../../services/producto.service';
 
 @Component({
   selector: 'app-mis-gastos',
@@ -15,9 +13,7 @@ export class MisGastosComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() {
-    console.log(this.Salas);
-  }
+  ngOnInit() { }
 
   salir() {
     this.modalCtrl.dismiss();
@@ -26,6 +22,4 @@ export class MisGastosComponent implements OnInit {
   sumaGasto(gasto: number) {
     this.gastoTotal += gasto;
   }
-
-
 }

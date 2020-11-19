@@ -31,7 +31,7 @@
                         <ion-row>
                             <ion-col>
                                 <ion-button type="submit" color="tertiary" shape="round">
-                                    Login
+                                    Iniciar sesión
                                 </ion-button>
                                 <ion-button (click)="resetPass()" expand="block" fill="clear" shape="round">
                                     olvidé la contraseña
@@ -62,7 +62,11 @@
         <ion-slide>
             <ion-grid fixed>
                 <div class="max">
-
+                    <ion-row>
+                        <ion-col>
+                            <img src="/assets/img/logo_wePay.svg">
+                        </ion-col>
+                    </ion-row>
                     <form (ngSubmit)="registro( fReg )" #fReg="ngForm">
                         <app-avatar-selector (avatarSel)="registroUser.avatar = $event"></app-avatar-selector>
 

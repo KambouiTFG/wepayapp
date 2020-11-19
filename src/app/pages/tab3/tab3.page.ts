@@ -2,11 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInput, ModalController } from '@ionic/angular';
 import { User } from '../../interfaces/interfaces';
 import { UsuarioService } from '../../services/usuario.service';
-import { UiServiceService } from '../../services/ui-service.service';
 import { AuthService } from '../../services/auth.service';
-import { SalaService } from '../../services/sala.service';
-import { ProductoService } from '../../services/producto.service';
 import { MisGastosComponent } from '../../components/mis-gastos/mis-gastos.component';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-tab3',
@@ -25,32 +23,18 @@ export class Tab3Page implements OnInit{
 
   constructor(private _user: UsuarioService,
               private _auth: AuthService,
-              private _producto: ProductoService,
-              private _sala: SalaService,
-              private modalCtrl: ModalController) {
-    
-  }
+              private modalCtrl: ModalController,
+              private _uiCtrl: UiServiceService) {  }
 
   async ngOnInit() {
-    // const loadingg = await this._uiCtrl.presentLoading('Cargando datos');
-    /* this._user.getMyInfo().subscribe( async (r: User) => {
-      if (r) {
-        this.usuario = r;
-        await this._uiCtrl.dismisLoading(loadingg);
-        this.avatar = r.avatar;
-      }
-    }); */
+    const loadingg = await this._uiCtrl.presentLoading('Cargando datos');
     this.usuario = this._user.myInfo;
-    this._user.hayUser.subscribe( r => {
-      this.usuario = r;
-      console.log('q paso');
+    this._user.hayUser.subscribe( async (user: User) => {
+      const loading = await this._uiCtrl.presentLoading('Cargando datos');
+      this.usuario = user;
+      await this._uiCtrl.dismisLoading(loading);
     });
-    // await this._uiCtrl.dismisLoading(loadingg);
-
-    /* this._user.hayUser.subscribe( r => {
-      console.log(r);
-    }); */
-
+    await this._uiCtrl.dismisLoading(loadingg);
   }
 
   dameFecha(ms: number) {
@@ -83,17 +67,13 @@ export class Tab3Page implements OnInit{
       }
       this.usuario.nombre = this.newName.value.toString();
       this.usuario.avatar = this.avatar;
-      console.log('cambiar');
-      await this._user.userUpdate('', this.usuario);
-    } else {
-      console.log('no cambiamo na');
+      await this._user.userUpdate(this.usuario);
     }
     this.edit = false;
     this.actualizando = false;
   }
 
   validar(nombre: string) {
-    console.log('NOMBRE: ', nombre);
     if (nombre.length >= 4 && nombre.length <= 16) {
       this.valido = true;
       return true;
@@ -103,7 +83,7 @@ export class Tab3Page implements OnInit{
     }
   }
 
-   editar() {
+  editar() {
     this.valido = true;
     this.edit = !this.edit;
     this.avatar = this.usuario.avatar;
@@ -112,7 +92,6 @@ export class Tab3Page implements OnInit{
         this.newName.setFocus();
       }, 150);
     }
-    // console.log(this.newName);
   }
 
   resetPass() {

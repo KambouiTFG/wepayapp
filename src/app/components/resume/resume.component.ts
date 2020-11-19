@@ -19,8 +19,6 @@ export class ResumeComponent implements OnInit {
 
   async ngOnInit() {
     this.participantes = this._sala.getInfoSala(this.idSala).participantes;
-    // console.log(this.participantes);
-    // console.log(this._sala.getInfoSala(this.idSala).participantes, this.productos);
   }
 
 

@@ -21,7 +21,7 @@ export class UiServiceService {
                }
 
 
-  async alertaInformativa(message, dur?: number) {
+  async alertaInformativa(message: string, dur?: number) {
     const toast = await this.toastCtrl.create({
       message,
       position: 'top',

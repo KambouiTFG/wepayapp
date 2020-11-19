@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SalaService } from '../../services/sala.service';
-import { NgForm } from '@angular/forms';
 import { UiServiceService } from '../../services/ui-service.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { User } from '../../interfaces/interfaces';
@@ -14,35 +13,29 @@ export class Tab1Page implements OnInit{
   nombreSala = '';
   codigoSala = '';
   myInfo: User = {};
-  haySalas = false;
+  misSalas = [];
 
   constructor(public _sala: SalaService,
               private uiCtrl: UiServiceService,
-              private _user: UsuarioService) {
-
-              }
+              private _user: UsuarioService) { }
 
   async ngOnInit() {
-    this._user.hayUser.subscribe( r => {
-      this.myInfo = r;
-      if (this._sala.idSala !== '' && !this._user.myInfo.salas.includes(this._sala.idSala)) {
-        console.log('IDSALA', this._sala.idSala);
-        console.log('myInfoSalas', this._user.myInfo.salas);
-
-        this._sala.salirSala();
-        this.uiCtrl.alertaInformativa('Ya no perteneces a esta sala');
-      }
-      if (this.myInfo.salas.length !== 0) {
-        this.haySalas = true;
-      } else {
-        this.haySalas = false;
-      }
-      // console.log(this.myInfo);
+    this._user.hayUser.subscribe( (user: User) => {
+      this.config(user);
     });
   }
 
-  haySala() {
-    // this._sala.seleccionarSala();
+  ngAfterViewInit() {
+    this.misSalas = this._user.getMisSalas();
+  }
+
+  config(user: User) {
+    this.myInfo = user;
+    this.misSalas = this.myInfo.salas;
+    if (this._sala.idSala !== '' && !this._user.myInfo.salas.includes(this._sala.idSala)) {
+      this._sala.salirSala();
+      this.uiCtrl.alertaInformativa('Ya no perteneces a esta sala');
+    }
   }
 
   async crearSala() {
@@ -66,7 +59,6 @@ export class Tab1Page implements OnInit{
   }
 
   irSala(idSala: string) {
-    // console.log('Sala seleccionada: ', idSala);
     this._sala.seleccionarSala(idSala);
   }
 }

@@ -35,7 +35,7 @@ export class ModalProductoComponent implements OnInit {
 
   async crearProducto(f: NgForm) {
     if ( JSON.stringify(this.producto) ===  JSON.stringify(this.infoProducto)) {
-      console.log('Son iguales');
+      // console.log('Son iguales');
       this.salir();
     }
     if (this.producto.categoria.length === 0) {
@@ -55,10 +55,10 @@ export class ModalProductoComponent implements OnInit {
     }
 
     if (f.invalid) {
-      console.log('invalid');
+      // console.log('invalid');
       return;
     }
-    console.log('valido', this.producto);
+    // console.log('valido', this.producto);
     await this.guardarProducto();
   }
 
@@ -90,7 +90,7 @@ export class ModalProductoComponent implements OnInit {
       ]
     });
     await alert.present();
-    console.log(await alert.onDidDismiss());
+    // console.log(await alert.onDidDismiss());
   }
 
 

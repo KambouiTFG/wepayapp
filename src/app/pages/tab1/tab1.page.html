@@ -1,4 +1,4 @@
-<app-header titulo="Menú Principal"></app-header>
+<app-header titulo="Página Principal"></app-header>
 <ion-content class="ion-padding" color="light">
 
     <div class="cuadrado">
@@ -64,15 +64,15 @@
                     <ion-row>
                         <ion-list-header class="ion-text-center">
                             <ion-title>Mis salas
-                                <span class="badge badge-primary badge-pill" *ngIf="haySalas">{{myInfo.salas.length}}</span>
+                                <span class="badge badge-primary badge-pill" *ngIf="misSalas">{{misSalas.length}}</span>
                             </ion-title>
                         </ion-list-header>
                     </ion-row>
                 </ion-grid>
-                <div class="listaSalas">
+                <div class="listaSalas" #listaSalas>
                     <ion-list>
-                        <app-item-sala *ngFor="let sala of myInfo.salas" [idSala]="sala" (click)="irSala( sala )"></app-item-sala>
-                        <ion-item *ngIf="!haySalas">
+                        <app-item-sala *ngFor="let sala of misSalas" [idSala]="sala" (click)="irSala( sala )"></app-item-sala>
+                        <ion-item *ngIf="misSalas.length === 0">
                             <ion-label class="ion-text-center">No perteneces a ninguna sala
                                 <p>
                                     ¡Crea o únete a una sala!

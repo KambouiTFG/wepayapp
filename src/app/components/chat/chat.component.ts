@@ -12,25 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class ChatComponent implements OnInit {
   divChatt;
-  /* chat = [{
-    msg: 'Hola que tal amigos',
-    user: '0rvUEhZOaUPrhEfNdpbcbJAHE8R2',
-    date: 1603043236987
-    }, {
-      msg: 'ay dio mio k  ricooooooooooo ricooooooooooo ricooooooooooo ricooooooooooo ricooooooooooo ',
-      user: 'karol g',
-      date: 1603043236995
-    }, {
-      msg: 'BRRRRRRRR',
-      user: 'anuel',
-      date: 1603043236000
-    }, {
-      msg: 'Que amigos más raros tengo :(',
-      user: '0rvUEhZOaUPrhEfNdpbcbJAHE8R2',
-      date: 1603043236222
-    }
-  ]; */
-
+  
   chat: Mensaje[] = [];
 
   subChat: Subscription;
@@ -43,7 +25,7 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this.divChatt = document.getElementById('chatt');
-    this._sala.haySala.subscribe((r) => {
+    this._sala.haySala.subscribe((r: any) => {
       if (r) {
         this.cargarMensajes();
         this.chatBottom();
@@ -51,14 +33,12 @@ export class ChatComponent implements OnInit {
         this.salioSala();
       }
     });
-
     this.cargarMensajes();
     this.chatBottom();
-
   }
 
-  async enviarMsg() {
-    await this._chat.addMsg(this.newMsg.trim());
+  enviarMsg() {
+    this._chat.addMsg(this.newMsg.trim());
     this.newMsg = '';
     this.chatBottom();
   }
@@ -70,6 +50,8 @@ export class ChatComponent implements OnInit {
       this.chatBottom();
     });
   }
+
+
 
   salioSala(){
     if (this.subChat) {

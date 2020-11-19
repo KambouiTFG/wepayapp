@@ -171,13 +171,10 @@ export class GroupImgSelectorComponent implements OnInit {
 
   @ViewChild(IonSlides, {static: false}) slides: IonSlides;
 
-  constructor() {
-    //console.log( ((Math.trunc(window.innerWidth / 100) + 0.5) > 7.5) ? 7.5 : (Math.trunc(window.innerWidth / 100) + 0.5) );
-   }
+  constructor() { }
 
   update() {
     this.slides.update();
-    console.log('update slide');
     this.select();
   }
 
@@ -208,8 +205,6 @@ export class GroupImgSelectorComponent implements OnInit {
   seleccionarAvatar( avatar ) {
     this.avatars.forEach( av => av.seleccionado = false);
     avatar.seleccionado = true;
-
-    // console.log(avatar.img);
     this.avatarSel.emit(avatar.img);
   }
 

@@ -18,7 +18,6 @@ export class OtraPasswordComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.email);
     setTimeout( () => {
       this.input.setFocus();
     }, 250);
@@ -36,7 +35,6 @@ export class OtraPasswordComponent implements OnInit {
     if (form.invalid) {
       return;
     } else {
-      console.log(this.email);
       this.modalCtrl.dismiss({email: this.email});
     }
   }

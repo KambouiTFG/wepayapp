@@ -29,7 +29,6 @@ export class ProductoService {
         this.addUserTodosProductos(idSala, this.newUser);
         this.newUser = '';
       }
-      // console.log('suscripcion', r);
     });
   }
 
@@ -63,9 +62,8 @@ export class ProductoService {
   }
 
 
-  async addUserTodosProductos(idSala: string, idUser: string) {
-    // console.log('Estamo dentro', this.productos);
-    await this.productos.forEach(async p => {
+  addUserTodosProductos(idSala: string, idUser: string) {
+    this.productos.forEach(async p => {
       const idProducto = p.propertyId;
       const participantes = p.participantes;
       if (!participantes.includes(idUser)) {
@@ -74,17 +72,15 @@ export class ProductoService {
       await this.db.collection('salas').doc(idSala)
       .collection('productos').doc(idProducto).update({
         participantes
-      }).then( () => {
-        // console.log('usuario añadido al producto');
       }).catch( e => {
-        // console.log('falló la operación');
+        console.error('falló la operación (addUserTodosProductos)', e);
       });
     });
   }
 
 
-  async deleteUserTodosProductos(idSala: string, idUser: string) {
-    await this.productos.forEach(async p => {
+  deleteUserTodosProductos(idSala: string, idUser: string) {
+    this.productos.forEach(async p => {
       const idProducto = p.propertyId;
       const participantes = p.participantes;
       if (participantes.includes(idUser)) {
@@ -93,10 +89,8 @@ export class ProductoService {
       await this.db.collection('salas').doc(idSala)
       .collection('productos').doc(idProducto).update({
         participantes
-      }).then( () => {
-        // console.log('usuario borrado del producto');
       }).catch( e => {
-        // console.log('falló la operación');
+        console.error('falló la operación (deleteUserTodosProductos)', e);
       });
     });
   }
@@ -129,16 +123,6 @@ export class ProductoService {
 
   getGasto(idSala: string){
     return this.db.collection('salas').doc(idSala).collection('productos').get();
-    
-    
-    /* .toPromise();
-    let part = 0;
-    data.forEach((producto) => {
-      if (producto.data().participantes.includes(idUser)) {
-        part += (producto.data().precio * producto.data().unidad) / producto.data().participantes.length;
-      }
-    });
-    return part; */
   }
 
 

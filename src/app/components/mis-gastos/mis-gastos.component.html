@@ -5,7 +5,7 @@
                 <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title mode="md">Resumen</ion-title>
+        <ion-title mode="md">Mis gastos</ion-title>
     </ion-toolbar>
 </ion-header>
 <ion-content class="ion-no-padding">
@@ -14,7 +14,7 @@
         <div class="max">
 
             <div class="mb-1 text-center">
-                <strong>Mis salas</strong>
+                <strong>Mis salas </strong>
                 <span class="badge badge-pill badge-primary">{{Salas.length}}</span>
             </div>
             <ion-list>
@@ -22,11 +22,12 @@
                 <ion-item>
                     <ion-buttons slot="end">
                         <h5 class="text-primary">Gasto total:
-                            <span class="badge badge-info badge-pill">{{ gastoTotal |  number : '1.2-2'}} €</span>
+                            <span class="badge badge-info badge-pill">
+                                {{ gastoTotal |  number : '1.2-2'}} €
+                            </span>
                         </h5>
                     </ion-buttons>
                 </ion-item>
-
             </ion-list>
         </div>
     </div>

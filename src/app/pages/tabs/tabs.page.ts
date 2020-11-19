@@ -15,7 +15,6 @@ export class TabsPage implements OnInit{
 
   ngOnInit() {
     this._sala.haySala.subscribe( (r: string) => {
-      // console.log(r);
       if (r) {
         this.haySala = true;
       } else {

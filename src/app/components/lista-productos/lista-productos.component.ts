@@ -25,29 +25,15 @@ export class ListaProductosComponent implements OnInit {
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
-    /* this._sala.haySala.subscribe( (r) => {
-      if (r) {
-        this.productos = this._producto.productos;
-        console.log('misProductos', this.productos);
-      }
-      
-    }); */
-    this._producto.hayProducto.subscribe( r => {
+    this._producto.hayProducto.subscribe( (r: any) => {
       this.productos = r;
       this.calculaTotal();
       this.calculaMiPart();
-
     });
     this.productos = this._producto.productos;
-    // console.log('misProductos', this.productos);
     this.calculaTotal();
     this.calculaMiPart();
-
   }
-
-/*   async modal(idProduct: string) {
-    await this._uiCtrl.presentModalProducto(idProduct);
-  } */
 
   async CrearProducto() {
     const newProducto = await this._uiCtrl.presentModalCrearProducto(this._sala.idSala);
@@ -58,13 +44,10 @@ export class ListaProductosComponent implements OnInit {
 
   async verDetalles(producto: Producto) {
     const infoProducto = await this._uiCtrl.presentModalProducto(producto, this._sala.idSala, this.role);
-    // console.log(infoProducto);
     if (infoProducto) {
       if (infoProducto.borrar) {
-        // console.log('borrar', infoProducto);
         await this.borrarProducto(infoProducto.producto);
       } else {
-        // console.log('producto ', infoProducto);
         this.guardarProducto(infoProducto.producto, false);
       }
     }
@@ -83,8 +66,6 @@ export class ListaProductosComponent implements OnInit {
   async borrarProducto(producto: Producto) {
     await this._producto.borrarProducto(this._sala.idSala, producto);
   }
-
-  
 
   calculaTotal() {
     this.total = 0;

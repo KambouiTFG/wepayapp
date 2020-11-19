@@ -17,11 +17,13 @@ export class ChatService {
       idUser: this._sala.myUID,
       date: new Date().getTime()
     };
-    return await this.db.collection('salas').doc(this._sala.idSala).collection('mensajes').add(mensaje);
+    return await this.db.collection('salas').doc(this._sala.idSala)
+    .collection('mensajes').add(mensaje);
   }
 
   cargarMensajes() {
     return this.db.collection('salas').doc(this._sala.idSala)
-    .collection<Mensaje>('mensajes', ref => ref.orderBy('date', 'asc').limit(100)).valueChanges();
+    .collection<Mensaje>('mensajes', ref => ref.orderBy('date', 'asc')
+    .limit(100)).valueChanges();
   }
 }

@@ -143,9 +143,7 @@ export class AvatarSelectorComponent implements OnInit {
 avatarSlide = {
   slidesPerView: ((Math.trunc(window.innerWidth / 100) + 0.5) > 6.5) ? 6.5 : (Math.trunc(window.innerWidth / 100) + 0.5)
 };
-  constructor() {
-    // console.log( ((Math.trunc(window.innerWidth / 100) + 0.5) > 7.5) ? 7.5 : (Math.trunc(window.innerWidth / 100) + 0.5) );
-  }
+  constructor() { }
 
   ngOnInit() {
     this.avatars.forEach( av => av.seleccionado = false);
@@ -160,8 +158,6 @@ avatarSlide = {
   seleccionarAvatar( avatar ) {
     this.avatars.forEach( av => av.seleccionado = false);
     avatar.seleccionado = true;
-
-    // console.log(avatar.img);
     this.avatarSel.emit(avatar.img);
   }
 }

@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { IonSlides, ModalController } from '@ionic/angular';
-import { OtraPasswordComponent } from 'src/app/components/otra-password/otra-password.component';
+import { IonSlides } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
-import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-login',
@@ -15,24 +13,11 @@ export class LoginPage implements OnInit {
   registrando = false;
 
   @ViewChild( 'mainSlide') slides: IonSlides;
-
-  /* loginUser = {
-    email: 'mohitaa@gmail.com',
-    password: '123456'
-  };
-  
-  registroUser = {
-    email: 'mohitaa@gmail.com',
-    password: '123456',
-    nombre: 'mohitaa',
-    avatar: 'av-1.png'
-  }; */
-
   loginUser = {
     email: '',
     password: ''
   };
-  
+
   registroUser = {
     email: '',
     password: '',
@@ -40,13 +25,9 @@ export class LoginPage implements OnInit {
     avatar: 'av-1.png'
   };
 
-  constructor(private _auth: AuthService,
-              private _uiS: UiServiceService,
-              private modalCtrl: ModalController) { }
+  constructor(private _auth: AuthService) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ngAfterViewInit(){
     this.slides.lockSwipes( true );
@@ -54,7 +35,6 @@ export class LoginPage implements OnInit {
 
 
   async login(login: NgForm) {
-    console.log('Clickeado boton del login');
     if ( login.invalid ) { return; }
     await this._auth.login(this.loginUser.email, this.loginUser.password);
   }
@@ -62,7 +42,6 @@ export class LoginPage implements OnInit {
 
   async registro( reg: NgForm) {
     if (reg.invalid) { return; }
-
     this.registrando = true;
     await this._auth.register( this.registroUser );
     this.registrando = false;

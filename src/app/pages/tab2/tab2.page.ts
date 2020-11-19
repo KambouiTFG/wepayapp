@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component,  OnInit, ViewChild } from '@angular/core';
 import { IonSlides, AlertController, ModalController } from '@ionic/angular';
 import { SalaService } from 'src/app/services/sala.service';
 import { Sala } from '../../interfaces/interfaces';
@@ -29,25 +29,13 @@ export class Tab2Page implements OnInit {
 
 
   ngOnInit() {
-    this._sala.haySala.subscribe( r => {
-      // console.log('Hay cambio', r);
-      /* if (r.code) {
-        if (this.infoSala.code !== r.code) {
-          this.irSlide(1);
-        }
-      } */
-      
-      
+    this._sala.haySala.subscribe( (sala: Sala) => {
       this.myUid = this._sala.myUID;
-      this.infoSala = r;
-      // console.log('infoSala', this.infoSala);
-      // console.log('idSala', this._sala.idSala);
+      this.infoSala = sala;
     });
     this.myUid = this._sala.myUID;
     this.infoSala = this._sala.infoSala;
-    console.log('infoSala', this.infoSala);
-
-
+    // console.log('infoSala', this.infoSala);
   }
 
   ngAfterViewInit(){

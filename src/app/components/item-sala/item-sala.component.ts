@@ -32,17 +32,9 @@ export class ItemSalaComponent implements OnInit, OnDestroy {
     if (this.subGastos) {
       this.subGastos.unsubscribe();
     }
-    console.log('adios');
   }
 
   ngOnInit() {
-    /* this._sala.getInfoSala(this.idSala).then( r => {
-      this.infoSala = r;
-      this.tienePoder();
-      // console.log(this.infoSala);
-    }); */
-    // this.infoSala = this._sala.getInfoSala(this.idSala);
-
     if (this._sala.myUID === null){
       return;
     }
@@ -60,7 +52,6 @@ export class ItemSalaComponent implements OnInit, OnDestroy {
 
     this.subCambio = this._sala.cambio.subscribe( (r) => {
       if (r) {
-        console.log(r, 'qqqqq');
         this.infoSala = this._sala.getInfoSala(this.idSala);
         this.tienePoder();
       }

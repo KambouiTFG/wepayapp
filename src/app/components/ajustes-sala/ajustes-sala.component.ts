@@ -20,7 +20,7 @@ export class AjustesSalaComponent implements OnInit, OnDestroy {
   subHaySala: Subscription;
   nombreBot = '';
   showSlides = false;
-  img;
+  img: string;
 
   constructor(private modalCtrl: ModalController,
               private alertCtrl: AlertController,
@@ -28,45 +28,21 @@ export class AjustesSalaComponent implements OnInit, OnDestroy {
               private uiCtrl: UiServiceService) { }
 
   ngOnDestroy() {
-    console.log('DESTRUCCION ajusteSala');
     if (this.subHaySala) {
       this.subHaySala.unsubscribe();
     }
   }
 
   ngOnInit() {
-    this.subHaySala = this._sala.haySala.subscribe( (r) => {
-      console.log('cambio', r);
-      if (r) {
-        this.config(r);
-        /* this.infoSala = r;
-        this.nombreSala = this.infoSala.nombre.toString();
-        this.img = this.infoSala.img;
-        if (this.infoSala.desc) {
-          this.descSala = this.infoSala.desc.toString();
-        } else {
-          this.descSala = '';
-        }
-        this.myUid = this._sala.myUID;*/
+    this.subHaySala = this._sala.haySala.subscribe( (sala: Sala) => {
+      if (sala) {
+        this.config(sala);
       }
     });
     this.config(this._sala.infoSala);
-    /* this.infoSala = this._sala.infoSala;
-    this.nombreSala = this.infoSala.nombre.toString();
-    this.img = this.infoSala.img;
-    if (this.infoSala.desc) {
-      this.descSala = this.infoSala.desc.toString();
-    } else {
-      this.descSala = '';
-    }
-    this.myUid = this._sala.myUID; */
-    
-    /* setTimeout(() => {
-      this.slide = true;
-    }, 0); */
   }
 
-  config(info) {
+  config(info: Sala) {
     this.infoSala = info;
     this.nombreSala = this.infoSala.nombre.toString();
     this.img = this.infoSala.img;
@@ -104,7 +80,7 @@ export class AjustesSalaComponent implements OnInit, OnDestroy {
     await this._sala.cambioImgSala(this.img);
   }
 
-  me(idUser) {
+  me(idUser: string) {
     if (idUser === this.infoSala.owner || idUser === this._sala.myUID) {
       return false;
     } else {
@@ -112,18 +88,15 @@ export class AjustesSalaComponent implements OnInit, OnDestroy {
     }
   }
 
-  role(idUser) {
+  role(idUser: string) {
     if (this.infoSala.admins.includes(idUser)) {
       return true;
     } else {
       return false;
     }
   }
-  /* async deleteUser(idUser){
-    await this._sala.deleteSalaUser(idUser);
-  } */
 
-  async deleteUser(idUser) {
+  async deleteUser(idUser: string) {
     const alert = await this.alertCtrl.create({
       message: '¿Seguro que quiere eliminar este usuario?',
       buttons: [
@@ -141,11 +114,11 @@ export class AjustesSalaComponent implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  async addAdmin(idUser) {
+  async addAdmin(idUser: string) {
     await this._sala.addAdmin(idUser);
   }
 
-  async deleteAdmin(idUser) {
+  async deleteAdmin(idUser: string) {
     const loading = await this.uiCtrl.presentLoading('Elmininando usuario');
     await this._sala.deleteAdmin(idUser);
     this.uiCtrl.dismisLoading(loading);

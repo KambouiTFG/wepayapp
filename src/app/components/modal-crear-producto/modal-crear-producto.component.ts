@@ -52,10 +52,10 @@ export class ModalCrearProductoComponent implements OnInit {
     }
 
     if (f.invalid) {
-      console.log('invalid');
+      // console.log('invalid');
       return;
     }
-    console.log('valido', this.producto);
+    // console.log('valido', this.producto);
     await this.guardarProducto();
   }
 

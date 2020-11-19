@@ -16,14 +16,8 @@ export class ParticipantesComponent implements OnInit {
               private _sala: SalaService) { }
 
   ngOnInit() {
-    /* this._sala.haySala.subscribe(() => {
-      this.haySala = true;
-    }); */
-
-    this._user.hayCambio.subscribe((r) => {
+    this._user.hayCambio.subscribe((r: any) => {
       if (r) {
-        // console.log('CAMBIO en participantes');
-        // this.infoUser = this._user.getNombre(this.idUser);
         if (!this.idUser.includes('-')) {
           this.infoUser = this._user.getNombre(this.idUser);
         } else {
@@ -34,8 +28,6 @@ export class ParticipantesComponent implements OnInit {
         }
       }
     });
-    // console.log('PARTICIPANTES CPM', this.idUser);
-    // this.infoUser = this._user.getNombre(this.idUser);
     if (!this.idUser.includes('-')) {
       this.infoUser = this._user.getNombre(this.idUser);
     } else {
